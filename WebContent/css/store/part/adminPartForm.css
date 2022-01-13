@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+
+#insertInfoPanel{
+	margin : 0 auto;
+	margin-top : 10px;
+	width : 780px;
+	height: 80px;
+	
+	
+}
+
+#insertInfoPanel p{
+	float : left;
+	width : 100px;
+	height : 70px;
+	border-top : 1px solid black;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+	line-height: 30px;
+	font-size : 13px;
+	margin-top : 4px;
+	text-align: center;
+}
+
+#insertInfoPanel p:first-child{
+	margin-left : 60px;
+	border : 1px solid black;
+}
+
+#insertInfoPanel p input,select{
+	width : 80px;
+}
+
+
+#insertInfoPanel p.insertButton{
+	border : 0px;
+	line-height: 90px;
+}
+
+#insertInfoPanel p.insertButton input{
+	width : 70px;
+}
+
+#triggerButtonPanel{
+	height : 30px;
+}
+
+#triggerButtonPanel p{
+	line-height: 35px;
+	width : 640px;
+	margin : 0 auto;
+}
+
+#triggerButtonPanel p input{
+	margin-left : 15px;
+	width : 80px;
+}
+
+#listPanel{
+	margin : 0 auto;
+	margin-top :5px;
+	width : 750px;
+	height: 330px;
+	overflow: auto;
+}
+
+#listPanel p{
+	margin : 0 auto;
+	height : 35px;
+	width : 640px;
+	border-left : 1px solid black;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+	line-height: 25px;
+}
+
+#listPanel p.title{
+	height : 31px;
+	border : 1px solid black;
+	line-height: 30px;
+	margin-top : 5px;
+}
+
+#listPanel p.selected{
+	background-color: gray;
+	cursor : default;
+}
+
+#listPanel p.hover{
+	background-color: lightgrey;
+	cursor : pointer;
+}
+
+#listPanel p:last-child{
+	margin-bottom : 5px;
+}
+
+#listPanel span{
+	float : left;
+	display : block;
+	margin-top: 3px;
+	margin-left : 15px;
+	width : 105px;
+	height : 25px;
+	text-align: center;
+}

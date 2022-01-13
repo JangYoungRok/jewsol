@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.saleSheet">
+	<select id="getSaleSheetList" parameterType="int" resultType="saleSheetDto">
+		SELECT * FROM TbSaleSheet WHERE customerSeq = #{customerSeq}
+		ORDER BY saleSheetSeq DESC LIMIT 30
+	</select>
+	
+	<select id="getSaleSheet" parameterType="int" resultType="saleSheetDto">
+		SELECT * FROM TbSaleSheet WHERE saleSheetSeq = #{saleSheetSeq}
+	</select>
+	
+	<select id="getOrderListForSaleSheet" parameterType="int" resultType="orderForSaleSheetDto">
+		SELECT * FROM ViewOrderForSaleSheet WHERE saleSheetSeq = #{saleSheetSeq}
+		ORDER BY orderK, storeProductName
+	</select>
+	
+	<select id="getLastSaleSheetNumber" parameterType="String" resultType="String">
+		SELECT saleSheetNumber FROM TbSaleSheet WHERE saleSheetDate = #{saleDate} Order BY saleSheetNumber DESC LIMIT 1
+	</select>
+	
+	<select id="getOrderSeqList" parameterType="int" resultType="int"> 
+		SELECT orderSeq FROM TbSale WHERE saleSheetSeq = #{saleSheetSeq}
+	</select>
+	
+	<select id="getLastSaleSheet" parameterType="int" resultType="saleSheetDto">
+		SELECT * FROM TbSaleSheet WHERE customerSeq = #{customerSeq} ORDER BY logtime DESC LIMIT 1
+		
+	</select>
+	
+	<insert id="insertSaleSheet" parameterType="saleSheetDto">
+		INSERT INTO TbSaleSheet 
+			(customerSeq, 
+			goldPriceSeq, 
+			saleTypeSeq, 
+			saleSheetDate, 
+			saleSheetNumber, 
+			total14Weight,
+			total18Weight,
+			total10Weight,
+			totalGoldWeight,
+			totalSalePrice,
+			saleCash,
+			saleGold)
+			VALUES(
+			#{customerSeq},
+			#{goldPriceSeq},
+			#{saleTypeSeq},
+			#{saleSheetDate},
+			#{saleSheetNumber},
+			#{total14Weight},
+			#{total18Weight},
+			#{total10Weight},
+			#{totalGoldWeight},
+			#{totalSalePrice},
+			#{saleCash},
+			#{saleGold}
+			)
+		<selectKey keyProperty="saleSheetSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateLastBalance" parameterType="saleSheetDto">
+		UPDATE TbSaleSheet 
+		SET lastBalanceGold = #{lastBalanceGold},
+		lastBalanceCash = #{lastBalanceCash}
+		WHERE saleSheetSeq = #{saleSheetSeq}
+	</update>
+	
+	<update id="updateBalance" parameterType="saleSheetDto">
+		UPDATE TbSaleSheet
+		SET balanceGold = #{balanceGold},
+		balanceCash = #{balanceCash},
+		lastBalanceGold = #{lastBalanceGold},
+		lastBalanceCash = #{lastBalanceCash}
+		WHERE saleSheetSeq = #{saleSheetSeq}
+	</update>
+  </mapper>

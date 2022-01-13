@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="factory.factoryOrder">
+	<select id="checkOrderDate" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM TbOrderDate WHERE orderDate = #{orderDate}
+	</select>
+	
+	<select id="getOrderClose" parameterType="String" resultType="String">
+		SELECT orderClose FROM TbOrderDate WHERE orderDate = #{orderDate}
+	</select>
+	
+	<select id="getOrderSeqList" parameterType="java.util.Map" resultType="int">
+		SELECT orderSeq FROM TbOrder 
+			WHERE (SELECT orderK FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = #{orderK}
+			AND (SELECT typeMain FROM TbType WHERE TbType.typeSeq = 
+					(SELECT typeSeq FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq)) = 'R'
+			AND (SELECT originalSheetDate FROM TbOriginalSheet WHERE TbOriginalSheet.originalSheetSeq = TbOrder.originalSheetSeq) = #{orderDate}
+			AND (SELECT orderHurry FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = 'F'
+			AND (SELECT supplierSeq FROM TbStoreProduct WHERE  TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq) = 0
+		ORDER BY (SELECT storeProductName FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq),
+				 (SELECT orderMainColor FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq),
+				 (SELECT orderSize FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq)
+	</select>
+	
+	<select id="getOrderSeqPendentList" parameterType="java.util.Map" resultType="int">
+		SELECT orderSeq FROM TbOrder 
+			WHERE (SELECT orderK FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = #{orderK}
+			AND (
+					(SELECT typeMain FROM TbType WHERE TbType.typeSeq = 
+						(SELECT typeSeq FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq)) = 'P'
+					OR
+					(SELECT typeMain FROM TbType WHERE TbType.typeSeq = 
+						(SELECT typeSeq FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq)) = 'E'
+				)
+					
+			AND (SELECT originalSheetDate FROM TbOriginalSheet WHERE TbOriginalSheet.originalSheetSeq = TbOrder.originalSheetSeq) = #{orderDate}
+			AND (SELECT orderHurry FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = 'F'
+			AND (SELECT supplierSeq FROM TbStoreProduct WHERE  TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq) = 0
+		ORDER BY (SELECT storeProductName FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq),
+				 (SELECT orderMainColor FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq),
+				 (SELECT orderSize FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq)
+	</select>
+	
+	<select id="getOrderSeqNecklaceList" parameterType="java.util.Map" resultType="int">
+		SELECT orderSeq FROM TbOrder 
+			WHERE (SELECT orderK FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = #{orderK}
+			AND (
+					(SELECT typeMain FROM TbType WHERE TbType.typeSeq = 
+						(SELECT typeSeq FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq)) = 'N'
+					OR 
+					(SELECT typeMain FROM TbType WHERE TbType.typeSeq = 
+						(SELECT typeSeq FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq)) = 'B'
+				)
+			AND (SELECT originalSheetDate FROM TbOriginalSheet WHERE TbOriginalSheet.originalSheetSeq = TbOrder.originalSheetSeq) = #{orderDate}
+			AND (SELECT orderHurry FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = 'F'
+			AND (SELECT supplierSeq FROM TbStoreProduct WHERE  TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq) = 0
+		ORDER BY (SELECT storeProductName FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq),
+				 (SELECT orderMainColor FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq),
+				 (SELECT orderSize FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq)
+	</select>	
+	
+	<select id="getOrderSeqHurryList" parameterType="java.util.Map" resultType="int">
+		SELECT orderSeq FROM TbOrder 
+			WHERE (SELECT orderK FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = #{orderK}
+			AND (SELECT orderHurry FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = 'T'
+			AND (SELECT originalSheetDate FROM TbOriginalSheet WHERE TbOriginalSheet.originalSheetSeq = TbOrder.originalSheetSeq) = #{orderDate}
+			AND (SELECT supplierSeq FROM TbStoreProduct WHERE  TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq) = 0
+		ORDER BY (SELECT storeProductName FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq),
+				 (SELECT orderMainColor FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq),
+				 (SELECT orderSize FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq)
+	</select>
+	
+	<select id="getOrderSeq10SvList" parameterType="String" resultType="int">
+		SELECT orderSeq FROM TbOrder 
+			WHERE (
+					(SELECT orderK FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = '10'
+					OR 
+					(SELECT orderK FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq) = 'SV'
+					)
+			AND (SELECT originalSheetDate FROM TbOriginalSheet WHERE TbOriginalSheet.originalSheetSeq = TbOrder.originalSheetSeq) = #{orderDate}
+			AND (SELECT supplierSeq FROM TbStoreProduct WHERE  TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq) = 0
+		ORDER BY (SELECT storeProductName FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq),
+				 (SELECT orderMainColor FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq),
+				 (SELECT orderSize FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq)	
+	</select>
+	
+	<select id="getOrderSeqAnoList" parameterType="String" resultType="int">
+		SELECT orderSeq FROM TbOrder 
+			WHERE
+				(SELECT originalSheetDate FROM TbOriginalSheet WHERE TbOriginalSheet.originalSheetSeq = TbOrder.originalSheetSeq) = #{orderDate}
+			AND (SELECT supplierSeq FROM TbStoreProduct WHERE  TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq) > 0
+		ORDER BY (SELECT storeProductName FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq = TbOrder.storeProductSeq),
+				 (SELECT orderMainColor FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq),
+				 (SELECT orderSize FROM TbOrderDetail WHERE TbOrderDetail.orderSeq = TbOrder.orderSeq)		
+	</select>
+	
+	<select id="getFactoryInqueryOrder" parameterType="String" resultType="inqueryFactoryOrderDto">
+		SELECT * FROM ViewInqueryOrder WHERE storeProductName LIKE CONCAT('%',#{productCode},'%')
+		ORDER BY orderDate, logtime, orderK, storeProductName, orderMainColor, orderSize LIMIT 100
+	</select>
+	
+	<insert id="insertOrder" parameterType="String">
+		INSERT INTO TbOrderDate (orderDate)
+		VALUES(#{orderDate})
+	</insert>
+	
+	<update id="updateOrderPanelSeq" parameterType="java.util.Map">
+		UPDATE TbOrder SET 
+			panelSeq = #{panelSeq},
+			orderNumber = #{orderNumber}
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="closeOrderDate" parameterType="String">
+		UPDATE TbOrderDate SET
+			orderClose = 'T'
+		WHERE orderDate = #{orderDate}
+	</update>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="core.member">
+  	<resultMap type="memberDto" id="memberResult">
+  		<result property="memberSeq" column="memberSeq"/>
+  		<result property="branchSeq" column="branchSeq"/>
+  		<result property="memberName" column="memberName"/>
+  	</resultMap>
+  
+  	<select id="getMemberList" parameterType="int" resultType="memberDto">
+  		SELECT * FROM TbMember WHERE branchSeq = #{branchSeq}
+  	</select>
+  
+  </mapper>

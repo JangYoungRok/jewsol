@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+@page{
+	margin : 0cm;
+}
+.a4Sheet{
+	page-break-after: always;
+}
+.sheet{
+	margin : 0 auto;
+	margin-top : 40px;
+	width : 740px;
+	height : 1070px;
+	overflow : hidden;
+}
+
+.a4Sheet .sheet .pageTitle{
+	margin-left : 35px;
+	font-size: 16px;
+}
+.a4Sheet .sheet .content{
+	margin : 0 auto;
+	margin-top : 15px;
+	margin-bottom : 15px;
+    border-collapse: collapse;
+}
+.a4Sheet .sheet .content th,
+.a4Sheet .sheet .content td{
+	border : 1px solid black;
+}
+.a4Sheet .sheet .content div{
+	font-size : 11px;
+	overflow: hidden;
+	text-align: center;
+	height : 28px;
+	line-height: 28px;
+}
+.a4Sheet .sheet .content div.orderNumber{
+	width : 35px;
+}
+.a4Sheet .sheet .content div.orderK{
+	width : 35px;
+}
+.a4Sheet .sheet .content div.customerName{
+	width : 120px;
+}
+.a4Sheet .sheet .content div.storeProductName{
+	width : 80px;
+}
+.a4Sheet .sheet .content div.orderSize{
+	width : 40px;
+}
+.a4Sheet .sheet .content div.orderColor{
+	width : 70px;
+}
+.a4Sheet .sheet .content div.orderEtc{
+	width : 350px;
+}
+
+.a4Sheet .sheet .pageInfo{
+	font-size: 16px;
+	margin-left : 350px;
+}

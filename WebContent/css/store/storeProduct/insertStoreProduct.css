@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+#searchPanel{
+	border-bottom : 1px solid black;
+	height : 50px;
+	font-size :14px;
+	padding-top: 7px;
+	padding-left: 30px;
+}
+
+#searchPanel select{
+	margin-right : 10px;
+	width : 50px;
+}
+
+
+#searchPanel input{
+	margin-right : 10px;
+	width : 60px;
+}
+
+#searchPanel input[type="button"]{
+	width : 100px;
+}
+
+#productPanel{
+	margin-left : 25px;
+	margin-top : 15px;
+	font-size: 14px;
+	height: 380px;
+}
+
+#productPanel img{
+	width : 130px;
+	height : 100px;
+}
+
+#productPanel input[type="text"]{
+	margin-right : 10px;
+	width : 80px;
+}
+
+#productPanel input[type="button"]{
+	width : 100px;
+}

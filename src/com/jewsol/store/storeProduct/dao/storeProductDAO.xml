@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.storeProduct">
+  
+  	<select id="getSearchStoreProduct" parameterType="int" resultType="storeProductDto">
+  		SELECT * FROM TbStoreProduct WHERE storeProductSeq=#{storeProductSeq}
+  	</select>
+  
+  	<select id="getStoreProductSeq" parameterType="storeProductDto" resultType="int">
+  		SELECT IF(COUNT(*)=0,0,storeProductSeq) AS storeProductSeq FROM TbStoreProduct WHERE branchSeq = #{branchSeq} AND typeSeq=#{typeSeq} AND categorySeq=#{categorySeq} AND storeProductCode=#{storeProductCode}
+  	</select>
+  	
+  	<select id="getStoreProductName" parameterType="int" resultType="String">
+		SELECT storeProductName FROM TbStoreProduct WHERE storeProductSeq=#{storeProductSeq}  	
+  	</select>
+  	
+  	<select id="checkOverLapStoreProductName" parameterType="storeProductDto" resultType="int">
+  		SELECT COUNT(*) FROM 
+ 			(SELECT * FROM TbStoreProduct WHERE
+ 				 branchSeq = #{branchSeq} AND categorySeq=#{categorySeq} AND storeProductCode=#{storeProductCode} AND typeSeq=#{typeSeq}) DATA
+  	</select>
+  	
+  	<select id="getStoreProductInUse" parameterType="int" resultType="String">
+  		SELECT storeProductInUse FROM TbStoreProduct WHERE storeProductSeq=#{storeProductSeq}
+  	</select>
+  	
+  	<select id="getStoreProduct" parameterType="int" resultType="storeProductDto">
+  		SELECT * FROM TbStoreProduct WHERE storeProductSeq=#{storeProductSeq}
+  	</select>
+  	
+  	<select id="searchStoreProductBoard" parameterType="searchProductDto" resultType="storeProductDto">
+ 		SELECT rowTable.* FROM (
+			SELECT @RNUM := @RNUM +1 AS ROWNUM, t. * 
+			FROM (
+					SELECT * FROM TbStoreProduct WHERE  branchSeq = #{branchSeq} AND storeProductInUse = 'T' AND categorySeq LIKE CONCAT('%',IF(#{categorySeq}=0,'',#{categorySeq}),'%')  AND storeProductCode LIKE CONCAT('%',#{productCode},'%') ORDER BY storeProductName 
+				)t,
+				 (
+					SELECT @RNUM :=0
+				)R
+			)rowTable
+		WHERE rowTable.ROWNUM BETWEEN #{startNum} AND #{endNum} 
+ 	</select>
+ 	
+ 	 <select id="getTotalRow" parameterType="searchProductDto" resultType="int">
+ 		SELECT COUNT(*) FROM TbStoreProduct WHERE branchSeq = #{branchSeq} AND storeProductInUse = 'T' AND categorySeq LIKE CONCAT('%',IF(#{categorySeq}=0,'',#{categorySeq}),'%')  AND storeProductCode LIKE CONCAT('%',#{productCode},'%')
+ 	</select>
+ 	
+ 	<select id="getTypeSeq" parameterType="int" resultType="int">
+ 		SELECT typeSeq FROM TbStoreProduct WHERE storeProductSeq = #{storeProductSeq}
+ 	</select>
+ 	
+ 	<select id="getStoreProductKeyWord" parameterType="storeProductDto" resultType="storeProductDto">
+ 		SELECT * FROM TbStoreProduct WHERE storeProductCode LIKE CONCAT('%',#{storeProductCode},'%') AND branchSeq = #{branchSeq}
+  		ORDER BY storeProductName LIMIT 10
+ 	</select>
+ 	
+ 	<select id="getCountStoreProductName" parameterType="storeProductDto" resultType="int">
+ 		SELECT COUNT(*) FROM TbStoreProduct WHERE categorySeq = #{categorySeq} AND typeSeq = #{typeSeq} AND storeProductCode = #{storeProductCode}
+ 	</select>
+ 	
+ 	<select id="getStoreProductList" parameterType="int" resultType="storeProductDto">
+ 		SELECT * FROM TbStoreProduct WHERE productSeq = #{productSeq}
+ 	</select>
+ 	
+ 	<select id="getStoreProductImage" parameterType="int" resultType="string">
+ 		SELECT storeProductImage FROM TbStoreProduct WHERE storeProductSeq = #{storeProductSeq}
+ 	</select>
+  	 
+  	<insert id="insertStoreProduct" parameterType="storeProductDto" keyColumn="storeProductSeq">
+  		INSERT INTO TbStoreProduct(branchSeq, supplierSeq, productSeq, categorySeq, typeSeq, storeProductCode,
+  		storeProductName, storeProductOriginalName,storeProductImage,storeProductAveWeight,storeProductPrice,storeProductLabor)
+  		VALUES(#{branchSeq},#{supplierSeq},#{productSeq},#{categorySeq},#{typeSeq},#{storeProductCode},
+  		#{storeProductName},#{storeProductOriginalName},#{storeProductImage},#{storeProductAveWeight},#{storeProductPrice},#{storeProductLabor})
+	  	<selectKey keyProperty="storeProductSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+  	</insert>
+  	
+  	<update id="notInUseStoreProduct" parameterType="int">
+  		UPDATE TbStoreProduct SET storeProductInUse = 'F' WHERE storeProductSeq=#{storeProductSeq}
+  	</update>
+  	
+  	<update id="updateStoreProduct" parameterType="storeProductDto">
+  		UPDATE TbStoreProduct SET 
+  			storeProductImage=#{storeProductImage},
+  			storeProductOriginalName=#{storeProductOriginalName},
+  			storeProductAveWeight=#{storeProductAveWeight},
+  			storeProductPrice=#{storeProductPrice}
+  		WHERE
+  			storeProductSeq=#{storeProductSeq}
+  	</update>
+  	
+  	<update id="updateStoreProductInFactory" parameterType="storeProductDto">
+  		UPDATE TbStoreProduct SET
+  			storeProductAveWeight=#{storeProductAveWeight},
+  			storeProductImage = #{storeProductImage}
+  		WHERE
+  			storeProductSeq = #{storeProductSeq}
+  	</update>
+  	
+  </mapper>

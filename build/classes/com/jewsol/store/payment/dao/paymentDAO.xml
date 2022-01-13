@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="store.payment">
+	<select id="getPaymentList" parameterType="int" resultType="paymentDto">
+		SELECT * FROM TbPayment WHERE customerSeq = #{customerSeq}
+		ORDER BY logtime DESC LIMIT 30
+	</select>
+	
+	<select id="getPayment" parameterType="int" resultType="paymentDto">
+		SELECT * FROM TbPayment WHERE paymentSeq = #{paymentSeq}
+	</select>
+	
+	<select id="getLastPayment" parameterType="int" resultType="paymentDto">
+		SELECT * FROM TbPayment WHERE customerSeq = #{customerSeq} ORDER BY logtime DESC LIMIT 1
+	</select>
+	
+	<insert id="insertPayment" parameterType="paymentDto">
+		INSERT INTO TbPayment(
+			customerSeq,
+			goldPriceSeq,
+			paymentDate,
+			lastBalanceGold,
+			lastBalanceCash,
+			paymentGold,
+			paymentCash,
+			paymentDC,
+			paymentContent,
+			balanceGold,
+			balanceCash
+		)
+		VALUES(
+			#{customerSeq},
+			#{goldPriceSeq},
+			#{paymentDate},
+			#{lastBalanceGold},
+			#{lastBalanceCash},
+			#{paymentGold},
+			#{paymentCash},
+			#{paymentDC},
+			#{paymentContent},
+			#{balanceGold},
+			#{balanceCash}
+		)
+		<selectKey keyProperty="paymentSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+</mapper>

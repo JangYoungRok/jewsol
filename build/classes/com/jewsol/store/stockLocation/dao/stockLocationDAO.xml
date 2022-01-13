@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.stockLocation">
+  
+  	<select id="getStockLocationList" resultType="stockLocationDto" parameterType="int">
+  		SELECT * FROM TbStockLocation WHERE branchSeq = #{branchSeq} AND stockLocationInUse = 'T' ORDER BY stockLocationSeq DESC
+  	</select>
+  	
+  	<select id="getStockLocationTypeList" resultType="stockLocationTypeDto">
+  		SELECT * FROM TbStockLocationType
+  	</select>
+  	
+  	<select id="checkOverLapStockLocationName" parameterType="stockLocationDto" resultType="int">
+  		SELECT count(*) FROM TbStockLocation WHERE stockLocationName=#{stockLocationName} AND branchSeq = #{branchSeq}
+  	</select>
+  	
+  	<select id="getStockLocationListByStockLocationTypeSeq" parameterType="java.util.Map" resultType="stockLocationDto">
+  		SELECT * FROM TbStockLocation WHERE branchSeq = #{branchSeq} AND stockLocationTypeSeq=#{stockLocationTypeSeq} AND stockLocationInUse = 'T' ORDER BY stockLocationSeq DESC
+  	</select>
+  	
+  	<insert id="insertStockLocation" parameterType="stockLocationDto">
+  		INSERT INTO TbStockLocation(
+  			branchSeq,
+  			stockLocationTypeSeq,
+  			stockLocationName,
+  			stockLocationType
+  		)VALUES(
+  			#{branchSeq},
+  			#{stockLocationTypeSeq},
+  			#{stockLocationName},
+  			#{stockLocationType}
+  		)
+  		
+  		
+  	</insert>
+  	
+  	<update id="notInUseStockLocation" parameterType="int">
+  		UPDATE TbStockLocation SET stockLocationInUse = 'F' WHERE stockLocationSeq=#{stockLocationSeq}
+  	</update>
+  
+  </mapper>

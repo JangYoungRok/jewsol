@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- AutoWired -->
+	<context:annotation-config></context:annotation-config>
+	
+	<!-- datasource & connection pool -->
+	<bean id="DS" class="org.apache.commons.dbcp.BasicDataSource"
+				  p:driverClassName="com.mysql.jdbc.Driver"
+				  p:url="jdbc:mysql://121.254.168.73/dbjewsol"
+				  p:username="jewsol"
+				  p:password="wkd0fhrdnqls1!1"
+				  p:validationQuery="SELECT 1"
+				  p:testWhileIdle="true"
+				  p:timeBetweenEvictionRunsMillis="7200000"
+	>
+	</bean>
+	
+	<!-- myBatis SqlMapFactory -->
+	<bean id="SSF" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="DS"></property>
+		<property name="configLocation" value="classpath:MySqlMapConfig.xml"></property>
+		<property name="transactionFactory">
+			<bean class="org.mybatis.spring.transaction.SpringManagedTransactionFactory"></bean>
+		</property>
+	</bean>
+	
+	<bean id="SST" class="org.mybatis.spring.SqlSessionTemplate"  destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="SSF"></constructor-arg>
+	</bean>
+
+</beans>

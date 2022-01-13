@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+#czInsertInfoPanel{
+	margin : 0 auto;
+	margin-top : 10px;
+	width : 700px;
+	height: 80px;
+}
+
+#czInsertInfoPanel p{
+	float : left;
+	width : 120px;
+	height : 70px;
+	border-top : 1px solid black;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+	line-height: 30px;
+	text-align: center;
+	margin-top : 4px;
+}
+
+#czInsertInfoPanel p input, select{
+	width:100px;
+}
+
+#czInsertInfoPanel p:first-child{
+	margin-left : 60px;
+	border : 1px solid black;
+}
+
+#czInsertInfoPanel p.insertButton{
+	border : 0px;
+	line-height: 90px;
+}
+
+#czInsertInfoPanel p.insertButton input{
+	width : 100px;
+	margin-left : 20px;
+}
+
+#czUpdateButtonPanel{
+	height : 30px;
+}
+
+#czUpdateButtonPanel p{
+	line-height: 35px;
+	width : 640px;
+	margin : 0 auto;
+}
+
+#czUpdateButtonPanel p input{
+	margin-left : 15px;
+	width : 80px;
+}
+
+#czListPanel{
+	margin : 0 auto;
+	margin-top :5px;
+	width : 750px;
+	height: 330px;
+	overflow: auto;
+}
+
+#czListPanel p{
+	margin : 0 auto;
+	height : 35px;
+	width : 640px;
+	border-left : 1px solid black;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+	line-height: 25px;
+}
+
+#czListPanel p.title{
+	height : 31px;
+	border : 1px solid black;
+	line-height: 30px;
+	margin-top : 5px;
+}
+
+#czListPanel p:last-child{
+	margin-bottom : 5px;
+}
+
+#czListPanel p.hover{
+	background-color: lightgrey;
+	cursor : pointer;
+}
+
+#czListPanel p.selected{
+	background-color: gray;
+	cursor : default;
+}
+
+#czListPanel p input{
+	width : 90px;
+}
+
+#czListPanel span{
+	float : left;
+	display : block;
+	margin-top: 3px;
+	margin-left : 15px;
+	width :130px;
+	height : 25px;
+	text-align: center;
+}

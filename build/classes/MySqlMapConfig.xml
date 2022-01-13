@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <configuration>
+  	<typeAliases>
+		<typeAlias type="com.jewsol.core.login.bean.LoginDTO" alias="loginDto"/>
+		<typeAlias type="com.jewsol.core.login.bean.LoginInfoDTO" alias="loginInfoDto"/>
+		<typeAlias type="com.jewsol.core.member.bean.MemberDTO" alias="memberDto"/>
+		<typeAlias type="com.jewsol.core.color.bean.ColorDTO" alias="colorDto"/>
+		<typeAlias type="com.jewsol.core.k.bean.KDTO" alias="kDto"/>
+		<typeAlias type="com.jewsol.core.plate.bean.PlateDTO" alias="plateDto"/>
+		<typeAlias type="com.jewsol.core.branch.bean.BranchDTO" alias="branchDto"/>
+		<typeAlias type="com.jewsol.core.branch.bean.BranchReleaseDTO" alias="branchReleaseDto"/>
+		<typeAlias type="com.jewsol.core.branch.bean.BranchBalanceDTO" alias="branchBalanceDto"/>
+		
+		<typeAlias type="com.jewsol.factory.product.bean.CategoryDTO" alias="categoryDto"/>
+		<typeAlias type="com.jewsol.factory.product.bean.TypeDTO" alias="typeDto"/>
+		<typeAlias type="com.jewsol.factory.product.bean.TypeMainDTO" alias="typeMainDto"/>
+		<typeAlias type="com.jewsol.factory.product.bean.ProductDTO" alias="productDto"/>
+		<typeAlias type="com.jewsol.factory.product.bean.ProductCzSizeDTO" alias="productCzSizeDto"/>
+		<typeAlias type="com.jewsol.factory.product.bean.ProductStoneSizeDTO" alias="productStoneSizeDto"/>
+		<typeAlias type="com.jewsol.factory.product.bean.ProductPartAttributeDTO" alias="productPartAttributeDto"/>
+		<typeAlias type="com.jewsol.factory.product.bean.SearchProductDTO" alias="searchProductDto"/>
+		<typeAlias type="com.jewsol.factory.factoryOrder.bean.InqueryFactoryOrderDTO" alias="inqueryFactoryOrderDto"/>
+		<typeAlias type="com.jewsol.factory.factoryOrder.bean.OrderDateDTO" alias="orderDateDto"/>
+		<typeAlias type="com.jewsol.factory.panel.bean.PanelDTO" alias="panelDto"/>
+		<typeAlias type="com.jewsol.factory.panel.bean.ViewOrderForPanelDTO" alias="viewOrderForPanelDto"/>
+		<typeAlias type="com.jewsol.factory.panel.bean.ViewOrderForStickerDTO" alias="viewOrderForStickerDto"/>
+		<typeAlias type="com.jewsol.factory.release.bean.ViewOrderForReleaseDTO" alias="viewOrderForReleaseDto"/>
+		<typeAlias type="com.jewsol.factory.release.bean.InsertReleaseDTO" alias="insertReleaseDto"/>
+		<typeAlias type="com.jewsol.factory.releaseSheet.bean.ViewOrderForReleaseSheetDTO" alias="viewOrderForReleaseSheetDto"/>
+		<typeAlias type="com.jewsol.factory.releaseSheet.bean.ReleaseSheetDTO" alias="releaseSheetDto"/>
+		
+		<typeAlias type="com.jewsol.store.payment.bean.PaymentDTO" alias="paymentDto"/>
+		<typeAlias type="com.jewsol.store.cz.bean.CzSizeDTO" alias="czSizeDto"/>
+		<typeAlias type="com.jewsol.store.cz.bean.CzDTO" alias="czDto"/>
+		<typeAlias type="com.jewsol.store.stone.bean.StoneSizeDTO" alias="stoneSizeDto"/>
+		<typeAlias type="com.jewsol.store.stone.bean.StoneDTO" alias="stoneDto"/>
+		<typeAlias type="com.jewsol.store.part.bean.PartDTO" alias="partDto"/>
+		<typeAlias type="com.jewsol.store.part.bean.PartAttributeDTO" alias="partAttributeDto"/>
+		<typeAlias type="com.jewsol.store.add.bean.AddDTO" alias="addDto"/>
+		<typeAlias type="com.jewsol.store.stockLocation.bean.StockLocationDTO" alias="stockLocationDto"/>
+		<typeAlias type="com.jewsol.store.stockLocation.bean.StockLocationTypeDTO" alias="stockLocationTypeDto"/>
+		<typeAlias type="com.jewsol.store.customer.bean.CustomerDTO" alias="customerDto"/>
+		<typeAlias type="com.jewsol.store.customer.bean.CustomerKeywordDTO" alias="customerKeywordDto"/>
+		<typeAlias type="com.jewsol.store.customer.bean.CustomerBalanceDTO" alias="customerBalanceDto"/>
+		<typeAlias type="com.jewsol.store.supplier.bean.SupplierDTO" alias="supplierDto"/>
+		<typeAlias type="com.jewsol.store.originalSheet.bean.OriginalSheetDTO" alias="originalSheetDto"/>
+		<typeAlias type="com.jewsol.store.storeProduct.bean.StoreProductDTO" alias="storeProductDto"/>
+		<typeAlias type="com.jewsol.store.option.bean.OptionDTO" alias="optionDto"/>
+		<typeAlias type="com.jewsol.store.option.bean.OptionAddDTO" alias="optionAddDto"/>
+		<typeAlias type="com.jewsol.store.option.bean.OptionCzDTO" alias="optionCzDto"/>
+		<typeAlias type="com.jewsol.store.option.bean.OptionStoneDTO" alias="optionStoneDto"/>
+		<typeAlias type="com.jewsol.store.option.bean.OptionPartDTO" alias="optionPartDto"/>
+		<typeAlias type="com.jewsol.store.stock.bean.StockDTO" alias="stockDto"/>
+		<typeAlias type="com.jewsol.store.goldPrice.bean.GoldPriceDTO" alias="goldPriceDto"/>
+		<typeAlias type="com.jewsol.store.sale.bean.SaleDTO" alias="saleDto"/>
+		<typeAlias type="com.jewsol.store.sale.bean.SaleTypeDTO" alias="saleTypeDto"/>
+		<typeAlias type="com.jewsol.store.sale.bean.OrderForSaleDTO" alias="orderForSaleDto"/>
+		<typeAlias type="com.jewsol.store.saleSheet.bean.SaleSheetDTO" alias="saleSheetDto"/>
+		<typeAlias type="com.jewsol.store.saleSheet.bean.OrderForSaleSheetDTO" alias="orderForSaleSheetDto"/>
+		<typeAlias type="com.jewsol.store.order.bean.OrderDTO" alias="orderDto"/>
+		<typeAlias type="com.jewsol.store.order.bean.ViewOrderDTO" alias="viewOrderDto"/>
+		<typeAlias type="com.jewsol.store.order.bean.OrderDetailDTO" alias="orderDetailDto"/>
+		<typeAlias type="com.jewsol.store.order.bean.OrderPriceDTO" alias="orderPriceDto"/>
+		<typeAlias type="com.jewsol.store.order.bean.OrderWeightDTO" alias="orderWeightDto"/>
+		<typeAlias type="com.jewsol.store.order.bean.InqueryOrderDTO" alias="inqueryOrderDto"/>
+		<typeAlias type="com.jewsol.store.orderOption.bean.OrderOptionDTO" alias="orderOptionDto"/>
+		<typeAlias type="com.jewsol.store.orderOption.bean.OrderOptionAddDTO" alias="orderOptionAddDto"/>
+		<typeAlias type="com.jewsol.store.orderOption.bean.OrderOptionCzDTO" alias="orderOptionCzDto"/>
+		<typeAlias type="com.jewsol.store.orderOption.bean.OrderOptionPartDTO" alias="orderOptionPartDto"/>
+		<typeAlias type="com.jewsol.store.orderOption.bean.OrderOptionStoneDTO" alias="orderOptionStoneDto"/>
+  	</typeAliases>	
+  
+  	<mappers>
+		<mapper resource="com/jewsol/core/login/dao/loginDAO.xml"/>
+		<mapper resource="com/jewsol/core/member/dao/memberDAO.xml"/>
+		<mapper resource="com/jewsol/core/color/dao/colorDAO.xml"/>
+		<mapper resource="com/jewsol/core/k/dao/kDAO.xml"/>
+		<mapper resource="com/jewsol/core/plate/dao/plateDAO.xml"/>
+		<mapper resource="com/jewsol/core/branch/dao/branchDAO.xml"/>
+		
+		<mapper resource="com/jewsol/factory/product/dao/productDAO.xml"/>
+		<mapper resource="com/jewsol/factory/factoryOrder/dao/factoryOrderDAO.xml"/>
+		<mapper resource="com/jewsol/factory/panel/dao/panelDAO.xml"/>
+		<mapper resource="com/jewsol/factory/release/dao/releaseDAO.xml"/>
+		<mapper resource="com/jewsol/factory/releaseSheet/dao/releaseSheetDAO.xml"/>
+		
+		<mapper resource="com/jewsol/store/payment/dao/paymentDAO.xml"/>
+		<mapper resource="com/jewsol/store/cz/dao/czDAO.xml"/>
+		<mapper resource="com/jewsol/store/stone/dao/stoneDAO.xml"/>
+		<mapper resource="com/jewsol/store/part/dao/partDAO.xml"/>
+		<mapper resource="com/jewsol/store/add/dao/addDAO.xml"/>
+		<mapper resource="com/jewsol/store/customer/dao/customerDAO.xml"/>
+		<mapper resource="com/jewsol/store/supplier/dao/supplierDAO.xml"/>
+		<mapper resource="com/jewsol/store/stockLocation/dao/stockLocationDAO.xml"/>
+		<mapper resource="com/jewsol/store/storeProduct/dao/storeProductDAO.xml"/>
+		<mapper resource="com/jewsol/store/option/dao/optionDAO.xml"/>
+		<mapper resource="com/jewsol/store/order/dao/orderDAO.xml"/>
+		<mapper resource="com/jewsol/store/orderOption/dao/orderOptionDAO.xml"/>
+		<mapper resource="com/jewsol/store/originalSheet/dao/originalSheetDAO.xml"/>
+		<mapper resource="com/jewsol/store/stock/dao/stockDAO.xml"/>
+		<mapper resource="com/jewsol/store/saleSheet/dao/saleSheetDAO.xml"/>
+		<mapper resource="com/jewsol/store/sale/dao/saleDAO.xml"/>
+		<mapper resource="com/jewsol/store/goldPrice/dao/goldPriceDAO.xml"/>
+  	</mappers>	
+  </configuration>

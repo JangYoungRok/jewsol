@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+	<mapper namespace="factory.release">
+		<update id="checkRelease" parameterType="int">
+			UPDATE TbOrderDetail SET 
+				orderState = 3
+			WHERE 
+				orderSeq = #{orderSeq}
+		</update>
+		
+		<update id="updateOrderState4" parameterType="int">
+			UPDATE TbOrderDetail SET
+				orderState = 4
+			WHERE 
+				orderSeq = #{orderSeq}
+		</update>
+		
+		<update id="updateOrderWeight" parameterType="insertReleaseDto">
+			UPDATE TbOrderWeight SET
+				orderWeight = #{orderWeight}
+			WHERE
+				orderSeq = #{orderSeq}
+		</update>
+		
+		<update id="updateOrderState2" parameterType="int">
+			UPDATE TbOrderDetail SET
+				orderState = 2
+			WHERE 
+				orderSeq = #{orderSeq}
+		</update>
+		
+		<select id="getOrderListByBranchNameState3" parameterType="String" resultType="viewOrderForReleaseDto">
+			<!-- SELECT * FROM ViewOrderForRelease WHERE branchName = #{branchName} AND orderState = 3
+			ORDER BY storeProductName, orderMainColor, orderSize  -->
+			
+			SELECT
+				odr.orderSeq,
+				br.branchName,
+				odrd.orderState,
+				date_format(oris.originalSheetDate,_utf8'%c - %e') orderDate,
+				odr.orderNumber,
+				odrd.orderK,
+				sp.storeProductName,
+				sp.storeProductImage,
+				TRIM(CONCAT(IFNULL(cs.customerSection,''),' ',IFNULL(cs.customerArea,''),' ',cs.customerName)) customerName,
+				odrd.orderSize,
+				odrd.orderMainColor,
+				odrd.orderSubColor,
+				odro.orderOptionName,
+				odrd.orderEtc,
+				odrd.orderHurry
+			FROM
+				(
+					SELECT 
+					
+					coverOdrd.orderSeq
+					
+					FROM TbOrderDetail coverOdrd
+					
+					WHERE coverOdrd.orderState = 3
+				) dataOdr JOIN TbOrder odr ON dataOdr.orderSeq = odr.orderSeq
+			LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+			LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+			LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+			LEFT JOIN TbBranch br ON cs.branchSeq = br.branchSeq
+			LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+			LEFT JOIN TbOriginalSheet oris ON odr.originalSheetSeq = oris.originalSheetSeq
+			
+			WHERE br.branchName = #{branchName}
+			
+			ORDER BY sp.storeProductName, odrd.orderMainColor, odrd.orderSize				
+		</select>
+		
+		<select id="getOrderListState3" resultType="viewOrderForReleaseDto">
+			<!-- SELECT * FROM ViewOrderForRelease WHERE orderState = 3
+			ORDER BY storeProductName, orderMainColor, orderSize  -->
+			SELECT
+				odr.orderSeq,
+				br.branchName,
+				odrd.orderState,
+				date_format(oris.originalSheetDate,_utf8'%c - %e') orderDate,
+				odr.orderNumber,
+				odrd.orderK,
+				sp.storeProductName,
+				sp.storeProductImage,
+				TRIM(CONCAT(IFNULL(cs.customerSection,''),' ',IFNULL(cs.customerArea,''),' ',cs.customerName)) customerName,
+				odrd.orderSize,
+				odrd.orderMainColor,
+				odrd.orderSubColor,
+				odro.orderOptionName,
+				odrd.orderEtc,
+				odrd.orderHurry
+			FROM
+				(
+					SELECT 
+					
+					coverOdrd.orderSeq
+					
+					FROM TbOrderDetail coverOdrd
+					
+					WHERE coverOdrd.orderState = 3
+				) dataOdr JOIN TbOrder odr ON dataOdr.orderSeq = odr.orderSeq
+			LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+			LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+			LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+			LEFT JOIN TbBranch br ON cs.branchSeq = br.branchSeq
+			LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+			LEFT JOIN TbOriginalSheet oris ON odr.originalSheetSeq = oris.originalSheetSeq
+			
+			ORDER BY sp.storeProductName, odrd.orderMainColor, odrd.orderSize
+		</select>
+	</mapper>

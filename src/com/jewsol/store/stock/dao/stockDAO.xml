@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="store.stock">
+	<insert id="insertStock" parameterType="stockDto">
+		INSERT INTO TbStock
+		(stockLocationSeq, orderSeq, toStockDate)
+		VALUES
+		((SELECT TbStockLocation.stockLocationSeq FROM TbOrder 
+			NATURAL JOIN TbCustomer
+			NATURAL JOIN TbStockLocation
+			WHERE orderSeq = #{orderSeq}),
+		#{orderSeq},
+		#{toStockDate})
+	</insert>
+	
+	<update id="updateToStockReleaseSheet" parameterType="releaseSheetDto">
+		UPDATE TbReleaseSheet SET
+		totalLabor = #{totalLabor},
+		totalGoldWeight = #{totalGoldWeight},
+		total10KWeight = #{total10KWeight},
+		total14KWeight = #{total14KWeight},
+		total18KWeight = #{total18KWeight},
+		totalQty = #{totalQty},
+		stocked = 'T'
+		WHERE
+		releaseSheetSeq = #{releaseSheetSeq}
+	</update>
+	
+	<delete id="deleteStock" parameterType="int">
+		DELETE FROM TbStock
+		WHERE orderSeq = #{orderSeq}
+	</delete>
+</mapper>

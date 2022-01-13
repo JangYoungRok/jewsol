@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.stone">
+  	<insert id="insertStone" parameterType="stoneDto">
+  		INSERT INTO TbStone (branchSeq, stoneName, stoneLabor, stonePrice, stoneSizeSeq, stoneCost, stoneSize)
+		SELECT #{branchSeq}, #{stoneName},stoneLabor,#{stonePrice},#{stoneSizeSeq},#{stoneCost},stoneSize FROM TbStoneSize WHERE stoneSizeSeq=#{stoneSizeSeq}
+  	</insert>
+  	
+  	<select id="getStoneSizeList" resultType="stoneSizeDto">
+  		SELECT * FROM TbStoneSize ORDER BY stoneSizeValue
+  	</select>
+  	
+  	<select id="getStoneList" parameterType="int" resultType="stoneDto">
+		SELECT * FROM TbStone
+		LEFT JOIN TbStoneSize ON TbStone.stoneSizeSeq = TbStoneSize.stoneSizeSeq
+		WHERE branchSeq = #{branchSeq} AND stoneInUse = 'T' ORDER BY TbStoneSize.stoneSizeValue, TbStone.stoneName
+  	</select>
+  	
+  	<select id="getStoneListByStoneSizeSeq" parameterType="stoneDto" resultType="stoneDto">
+  		SELECT * FROM TbStone
+  		LEFT JOIN TbStoneSize ON TbStone.stoneSizeSeq = TbStoneSize.stoneSizeSeq
+  		WHERE branchSeq = #{branchSeq} AND TbStone.stoneSizeSeq = #{stoneSizeSeq} AND stoneInUse = 'T' ORDER BY TbStoneSize.stoneSizeValue, TbStone.stoneName
+  	</select>
+  	
+  	<select id="getStone" parameterType="int" resultType="stoneDto">
+  		SELECT * FROM TbStone WHERE stoneSeq=#{stoneSeq}
+  	</select>
+  	
+  	<select id="getStoneSizeSeq" parameterType="int" resultType="int">
+  		SELECT stoneSizeSeq FROM TbStone WHERE stoneSeq = #{stoneSeq}
+  	</select>
+  	
+   	<update id="notInUseStone" parameterType="int">
+  		UPDATE TbStone set stoneInUse = 'F' WHERE stoneSeq = #{stoneSeq}
+  	</update> 	
+  
+  </mapper>

@@ -1,0 +1,106 @@
+@CHARSET "UTF-8"; 
+
+#stoneInsertInfoPanel{
+	margin : 0 auto;
+	margin-top : 10px;
+	width : 700px;
+	height: 80px;
+}
+
+#stoneInsertInfoPanel p{
+	float : left;
+	width : 120px;
+	height : 70px;
+	border-top : 1px solid black;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+	line-height: 30px;
+	text-align :center;
+	margin-top : 4px;
+}
+
+#stoneInsertInfoPanel p:first-child{
+	margin-left : 60px;
+	border : 1px solid black;
+}
+
+#stoneInsertInfoPanel p input,select{
+	width : 100px;
+}
+
+#stoneInsertInfoPanel p.insertButton{
+	border : 0px;
+	line-height: 90px;
+}
+
+
+
+#stoneInsertInfoPanel p.insertButton input{
+	width : 100px;
+	margin-left : 20px;
+}
+
+#stoneUpdateButtonPanel{
+	height : 30px;
+}
+
+#stoneUpdateButtonPanel p{
+	line-height: 35px;
+	width : 640px;
+	margin : 0 auto;
+}
+
+#stoneUpdateButtonPanel p input{
+	margin-left : 15px;
+	width : 80px;
+}
+
+
+#stoneListPanel{
+	margin : 0 auto;
+	margin-top :5px;
+	width : 750px;
+	height: 330px;
+	overflow: auto;
+}
+
+#stoneListPanel p{
+	margin : 0 auto;
+	height : 35px;
+	width : 640px;
+	border-left : 1px solid black;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+	line-height: 25px;
+}
+
+#stoneListPanel p.title{
+	height : 31px;
+	border : 1px solid black;
+	line-height: 30px;
+	margin-top : 5px;
+}
+
+#stoneListPanel p.hover{
+	background-color: lightgrey;
+	cursor : pointer;
+}
+
+#stoneListPanel p.selected{
+	background-color: gray;
+	cursor : default;
+}
+
+#stoneListPanel p:last-child{
+	margin-bottom : 5px;
+}
+
+#stoneListPanel span{
+	float : left;
+	display : block;
+	margin-top: 3px;
+	margin-left : 15px;
+	width : 105px;
+	height : 25px;
+	text-align: center;
+}

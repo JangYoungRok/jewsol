@@ -1,0 +1,68 @@
+@CHARSET "UTF-8";
+
+#gnb{
+	margin: 0 auto;
+	width: 800px;
+	height: 100px;
+	border: 1px solid black;
+}
+	
+#mainPanel{
+	margin: 0 auto;
+	width: 800px;
+	height: 500px;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	overflow:auto; 
+}
+	
+#footer{
+	margin: 0 auto;
+	width: 800px;
+	height: 100px;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+}
+
+#loginInfoPanel{
+	margin-top: 10px;
+	margin-left:10px;
+	border: 1px solid black;
+	width:140px;
+	height:80px;
+	float: left;
+	
+}
+
+#loginInfoPanel p{
+	margin-top:5px;
+	margin-left:30px;
+}
+
+#loginInfoPanel input{
+	margin-top:5px;
+	margin-left:30px;
+}
+
+#navigationPanel{
+	margin-top: 10px;
+	margin-left:10px;
+	width:570px;
+	height:80px;
+	float: left;
+}
+
+#systemMessagePanel{
+	margin: 0 auto;
+	width : 700px;
+	height: 80px;
+	text-align:center;
+	line-height:25px;
+	overflow:auto; 
+}
+
+#systemMessagePanel p{
+	margin : 5px;
+}

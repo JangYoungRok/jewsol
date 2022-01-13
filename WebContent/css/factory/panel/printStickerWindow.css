@@ -1,0 +1,84 @@
+@CHARSET "UTF-8";
+
+@page{
+	margin : 0;
+}
+img{
+	width : 80px;
+	height : 64px;
+	margin-top : 2px;
+}
+.a4Sheet{
+	page-break-after: always;
+}
+.a4Sheet .sheet{
+	
+	margin-left : 18.5px;
+	width : 758px;
+	height : 1066px;
+	overflow : hidden;
+	
+}
+
+.a4Sheet .sheet .row:first-child{
+	margin-top : 79px;
+}
+.a4Sheet .sheet .row{
+	height : 151px;
+	margin-bottom : 11px;
+	clear : both;
+}
+.a4Sheet .sheet .row:last-child{
+	margin-bottom : 0px;
+}
+.a4Sheet .sheet .row .col{
+	float : left;
+	width : 189px;
+}
+.a4Sheet .sheet .row .col .sticker{
+	border-collapse : collapse;
+}
+
+.a4Sheet .sheet .row .col .sticker td{
+	border : 1px dotted black;
+	vertical-align: middle;
+	
+}
+.a4Sheet .sheet .row .col .sticker td div{
+	text-align : center;
+	orverflow : hidden;
+}
+
+.a4Sheet .sheet .row .col .image{
+	width : 88px;
+	height : 64px;
+}
+.a4Sheet .sheet .row .col .barcode{
+	width : 80px;
+	height : 18px;
+}
+.a4Sheet .sheet .row .col .info{
+	margin-top : 9px;
+	line-height : 14px;
+	width : 100px;
+	height : 74px;
+	font-size : 6pt;
+}
+.a4Sheet .sheet .row .col .info .productName{
+	font-size : 8pt;
+}
+.a4Sheet .sheet .row .col .orderEtc{
+	font-size : 7pt;
+	height : 69px;
+	line-height : 16px;
+}
+
+.sticker td span.fontRed{
+	color : red;
+}
+.sticker td span.fontBlue{
+	color : blue;
+}
+.sticker td span.fontGreen{
+	color : green;
+}

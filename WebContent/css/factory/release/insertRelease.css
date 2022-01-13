@@ -1,0 +1,93 @@
+@CHARSET "UTF-8";
+#triggerPanel{
+	border-bottom : 1px solid black;
+	height : 35px;
+	font-size :14px;
+	padding-top: 10px;
+	padding-left: 30px;
+}
+img{
+	margin-top : 2px;
+	width : 75px;
+	height : 60px;
+
+}
+#branchList{
+	width : 80px;
+	margin-right : 15px;
+}
+
+#insertReleaseBtn{
+	width : 80px;
+}
+
+#orderListPanel{
+	height: 454px;
+	overflow: auto;
+}
+
+#orderList{
+	margin-left : auto;
+	margin-right : auto;
+	border-collapse : collapse;
+	text-align : center;
+	line-height : 1.5;
+	border-top : 1px solid lightgray;
+	border-bottom : 1px solid lightgray;
+}
+#orderList tbody tr{
+	border-bottom : 1px dotted black;
+}
+
+#orderList tbody td{
+	vertical-align: middle;
+	border-right : 1px solid black;
+	
+}
+#orderList tbody td:last-child{
+	border-right : 0px;
+}
+
+#orderList div{
+	font-size : 11px;
+	overflow: hidden;
+	text-align: center;
+	height : 64px;
+	line-height: 64px;
+}
+
+#orderList div.orderDate{
+	width : 50px;
+}
+#orderList div.orderK{
+	width : 30px;
+}
+#orderList div.storeProductImage{
+	width : 82px;
+}
+#orderList div.customerName{
+	width : 70px;
+}
+#orderList div.storeProductName{
+	width : 70px;
+}
+#orderList div.orderSize{
+	width : 40px;
+}
+#orderList div.orderColor{
+	width : 70px;
+}
+#orderList div.orderEtc{
+	width : 240px;
+}
+#orderList div.orderWeight{
+	width : 80px;
+}
+#orderList div.orderWeight input{
+	width : 60px;
+}
+
+.inserted{
+	background-color: lightgray;
+	cursor: pointer;
+}

@@ -1,0 +1,278 @@
+@CHARSET "UTF-8";
+
+#orderInsertPanel{
+	margin-top : 10px;
+	height : 140px;
+	border-bottom: 1px solid black;
+	
+}
+
+#orderInsertPanel>div:first-child{
+	float : left;
+	width : 159px;
+	height : 129px;
+	
+}
+#orderInsertPanel>div>img{
+	margin-top : 4px;
+	margin-left : 4px;
+	width : 150px;
+	height : 120px;
+	border : 1px solid black;
+}
+
+#orderInsertPanel>div:not(:first-child){
+	width : 640px;
+	margin-left : 160px;
+	margin-top : 15px;
+}
+
+#orderInsertPanel>div:nth-child(2) input:nth-child(1){
+	width : 70px;
+	text-align :center;
+	margin-right : 10px;
+}
+
+#orderInsertPanel>div:nth-child(2) input:nth-child(2){
+	width : 40px;
+	text-align :center;
+	margin-right : 10px;
+}
+
+#orderInsertPanel>div:nth-child(2) select:nth-child(3){
+	width : 80px;
+	margin-right : 10px;
+}
+
+#orderInsertPanel>div:nth-child(2) input:nth-child(4){
+	width : 120px;
+}
+
+#orderInsertPanel>div:nth-child(4) input:nth-child(1){
+	width : 80px;
+	margin-right : 5px;
+}
+
+#orderInsertPanel>div:nth-child(4) select:nth-child(2){
+	width : 100px;
+	margin-right : 5px;
+}
+
+#orderInsertPanel>div:nth-child(4) select:nth-child(3){
+	width : 50px;
+	margin-right : 5px;
+	
+}
+
+#orderInsertPanel>div:nth-child(4) select:nth-child(4){
+	width : 70px;
+	margin-right : 5px;
+	
+}
+
+#orderInsertPanel>div:nth-child(4) select:nth-child(5){
+	width : 70px;
+	
+}
+
+#orderInsertPanel>div:nth-child(6) input:nth-child(1){
+	width : 40px;
+	margin-right : 5px;
+	
+}
+
+#orderInsertPanel>div:nth-child(6) input:nth-child(2){
+	width : 220px;
+	margin-right : 5px;
+	
+}
+
+#orderInsertPanel>div:nth-child(6) input:nth-child(3){
+	margin-right : 5px;
+	margin-right : 10px;
+	
+}
+
+#orderInsertPanel>div:nth-child(6) select:nth-child(4){
+	width : 120px;
+	
+}
+
+#orderInsertPanel #customerListDiv{
+	position:relative;
+	left : 448px;
+	top : -13px;
+	width : 160px;
+}
+#orderInsertPanel #customerListDiv ul{
+	width : 160px;
+	height : 300px;
+	border : 1px solid black;
+	position: absolute;
+	background-color: white;
+	
+}
+
+#orderInsertPanel #customerListDiv ul li{
+	display : block;
+	width : 160px;
+	height : 24px;
+}
+
+
+#orderInsertPanel #storeProductListDiv{
+	position:relative;
+	left : 65px;
+	top : -13px;
+	width : 160px;
+}
+#orderInsertPanel #storeProductListDiv ul{
+	width : 160px;
+	height : 300px;
+	border : 1px solid black;
+	position: absolute;
+	background-color: white;
+	
+}
+
+#orderInsertPanel #storeProductListDiv ul li{
+	display : block;
+	width : 160px;
+	height : 24px;
+}
+
+#orderInsertPanel #storeProductListDiv .storeProductImage{
+	visibility: hidden;
+}
+
+
+#orderOptionPanel{
+	height : 140px;
+	border-bottom: 1px solid black;
+}
+
+#orderOptionPanel>div{
+	float : left;
+	width : 199px;
+	height : 140px;
+	border-right : 1px solid black;
+	overflow : auto;
+	
+}
+
+#orderOptionPanel>div:last-child{
+	width : 200px;
+	border-right : 0px;
+}
+
+#orderOptionPanel>div p.title{
+	height : 31px;
+	text-align: center;
+	font-weight : bold;
+	line-height: 30px;
+}
+
+#orderOptionPanel>div p{
+	height : 31px;
+}
+
+#orderOptionPanel>div p input{
+	width : 25px;
+	margin-left : 5px;
+	text-align : center;
+}
+
+#orderOptionPanel>div p input[name='czSize']{
+	width : 40px;
+	margin-left : 5px;
+}
+#orderOptionPanel>div p input[name='cz']{
+	width : 70px;
+	margin-left : 5px;
+}
+
+#orderOptionPanel>div p input[name='stoneSize']{
+	width : 50px;
+	margin-left : 5px;
+}
+#orderOptionPanel>div p input[name='stone']{
+	width : 70px;
+	margin-left : 5px;
+}
+
+#orderOptionPanel>div p select{
+	width: 60px;
+	margin-left : 5px;
+}
+
+#orderOptionPanel #optionPartDiv select{
+	width: 80px;
+	margin-left : 5px;
+}
+
+#orderListPanel {
+	overflow: auto;
+	height : 200px;
+}
+
+#orderListPanel table{
+	margin-left : auto;
+	margin-right : auto;
+	border-collapse : collapse;
+	text-align : center;
+	line-height : 1.5;
+	border-top : 1px solid lightgray;
+	border-bottom : 1px solid lightgray;
+	table
+	
+}
+
+#orderListPanel table thead th{
+	font-size : 13px;
+	vertical-align: middle;
+	background-color: lightgray;
+	border-right : 1px solid black;
+}
+#orderListPanel table div{
+	overflow : hidden;
+	height : 22px;
+	text-align : center;
+}
+
+#orderListPanel table .orderNumber{
+	width : 40px;
+}
+#orderListPanel table .orderK{
+	width : 40px;
+}
+#orderListPanel table .customer{
+	width : 100px;
+}
+#orderListPanel table .storeProductName{
+	width : 100px;
+}
+#orderListPanel table .orderSize{
+	width : 40px;
+}
+#orderListPanel table .orderColor{
+	width : 90px;
+}
+#orderListPanel table .optionName{
+	width : 100px;
+}
+#orderListPanel table .orderEtc{
+	border-right : 0px;
+	width : 250px;
+}
+
+
+
+#orderListPanel table tbody td{
+	font-size : 12px;
+	vertical-align: middle;
+	border-right : 1px solid black;
+}
+#orderListPanel table tbody td:nth-child(8),
+#orderListPanel table tbody th:nth-child(8){
+	border-right : 0px;
+}

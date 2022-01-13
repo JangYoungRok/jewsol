@@ -1,0 +1,100 @@
+@CHARSET "UTF-8";
+
+#searchPanel{
+	border-bottom : 1px solid black;
+	height : 35px;
+	font-size :14px;
+	padding-top: 10px;
+	padding-left: 30px;
+}
+
+#searchPanel select{
+	margin-right : 10px;
+	width : 50px;
+}
+
+#searchPanel input{
+	margin-right : 10px;
+	width : 60px;
+}
+
+#searchPanel input[type="button"]{
+	width : 100px;
+}
+
+#productPanel{
+	float: left;
+	width : 500px;
+	height: 130px;
+	border-right: 1px solid black;
+}
+
+#productPanel p{
+	margin-left:20px;
+	float: left;
+}
+
+#productPanel p:last-child{
+	padding-top:20px;
+}
+#productPanel p:last-child input{
+	font-size: 16px;
+	width:100px;
+	text-align:center;
+}
+#productPanel p input{
+	width:150px;
+}
+
+#productPanel img{
+	width : 130px;
+	height : 100px;
+}
+
+#triggerPanel{
+	
+	border-bottom : 1px solid black;
+	padding-top:15px;
+	height: 115px;
+	font-size: 16px;
+	line-height:30px;
+}
+
+#triggerPanel input[type="button"]{
+	margin-left : 15px;
+	width : 100px;
+}
+
+#triggerPanel input[type="radio"]{
+	margin-left : 15px;
+}
+
+#productOptionPanel{
+	clear : both;
+	height :320px;
+}
+
+#productOptionPanel div{
+	float : left;
+	width : 240px;
+	height : 295px;
+	border : 1px solid black;
+	margin-top : 10px;
+	margin-left : 20px;
+	overflow: hidden;
+}
+
+#productOptionPanel div p.productOption_title{
+	font-size: 16px;
+	font-weight : bold;
+	
+}
+
+#productOptionPanel div p{
+	height : 28px;
+	font-size: 16px;
+	border-bottom : 1px solid black;
+	text-align: center;
+	line-height: 30px;
+}
+

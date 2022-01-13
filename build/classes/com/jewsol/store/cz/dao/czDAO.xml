@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.cz">
+ 	<insert id="insertCz" parameterType="czDto">
+  		INSERT INTO TbCz (branchSeq, czName, czLabor, czPrice, czSizeSeq, czCost, czSize)
+		SELECT #{branchSeq}, #{czName},#{czLabor},#{czPrice},#{czSizeSeq},'190',czSize FROM TbCzSize WHERE czSizeSeq=#{czSizeSeq}
+  	</insert>
+  	
+  	<select id="getCzSizeList" resultType="czSizeDto">
+  		SELECT * FROM TbCzSize
+  	</select>
+  	
+  	<select id="getCzList" parameterType="int" resultType="czDto">
+  		SELECT * FROM TbCz WHERE branchSeq = #{branchSeq} AND czInUse = 'T' ORDER BY czSize, czName
+  	</select>
+  	
+  	<select id="getCzListByCzSizeSeq" parameterType="czDto" resultType="czDto">
+  		SELECT * FROM TbCz WHERE branchSeq = #{branchSeq} AND czSizeSeq = #{czSizeSeq} AND czInUse = 'T' ORDER BY czSize, czName
+  	</select>
+  	
+  	<select id="getCz" parameterType="int" resultType="czDto">
+  		SELECT * FROM TbCz WHERE czSeq=#{czSeq}
+  	</select>
+  	
+  	<select id="getCzSizeSeq" parameterType="int" resultType="int">
+  		SELECT czSizeSeq FROM TbCz WHERE czSeq=#{czSeq}
+  	</select>
+  	
+  	<select id="getOptionSeqListByCzSeq" parameterType="int" resultType="int">
+  		SELECT optionSeq FROM TbOptionCz WHERE czSeq = #{czSeq} GROUP BY optionSeq
+  	</select>
+  	
+  	<select id="getOptionCzSeqListByCzSeq" parameterType="int" resultType="int">
+  		SELECT optionCzSeq FROM TbOptionCz WHERE czSeq = #{czSeq}
+  	</select>
+  	
+  	<update id="updateCz" parameterType="czDto">
+  		UPDATE TbCz
+  		SET czName = #{czName},
+  		czPrice = #{czPrice},
+  		czLabor = #{czLabor}
+  		WHERE czSeq = #{czSeq}
+  	</update>
+  	
+  	<update id="notInUseCz" parameterType="int">
+  		UPDATE TbCz set czInUse = 'F' WHERE czSeq = #{czSeq}
+  	</update>
+  </mapper>

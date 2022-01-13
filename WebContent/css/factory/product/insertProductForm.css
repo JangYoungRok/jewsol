@@ -1,0 +1,109 @@
+@CHARSET "UTF-8";
+
+/*제품정보 입력 상단*/
+#productInfoArticle{
+	margin : 0 auto;
+	margin-top : 10px;
+	width : 700px;
+	height: 170px;
+	
+}
+
+#productImageDiv{
+	margin-left : 50px;
+	margin-top : 5px;
+	float : left;
+	width : 200px;
+	height: 160px;
+	border : 1px solid black;
+	
+}
+
+#prev_img{
+	margin-left : 25px;
+	margin-top : 5px;
+	width : 150px;
+	height : 120px;
+}
+
+#productImage{
+	margin-top : 3px;
+	margin-left : 10px;
+	width : 180px;
+}
+
+#productInfoDiv{
+	margin-left : 10px;
+	margin-top : 5px;
+	float : left;
+	width : 400px;
+	height: 160px;
+	
+}
+	
+#productInfoDiv p{
+	margin-top : 15px;
+	margin-left : 25px;
+	border-bottom : 1px solid black;
+	padding-bottom : 3px;
+	
+}
+
+#productInfoDiv p label span{
+	text-align : center;
+	display : inline-block;
+	width : 75px;
+}
+
+/*제품정보 입력 하단*/
+#productOptionInfoArticle{
+	margin : 0;
+	width : 800px;
+	height : 290px;
+	
+}
+
+#productOptionInfoArticle div{
+	float : left;
+	margin-top : 10px;
+	margin-left : 7px;
+	width : 255px;
+	height : 270px;
+	border : 1px solid black;
+	
+}
+
+#productOptionInfoArticle .productOption_title{
+	text-align : center;
+	font-size: 12px;
+	padding-bottom : 0px;
+}
+
+#productOptionInfoArticle div p{
+	margin-top : 3px;
+	margin-left : 25px;
+	margin-right : 25px;
+	border-bottom : 1px dotted black;
+	padding-bottom : 3px;
+	font-size: 11px;
+	height : 20px;
+}
+
+#productOptionInfoArticle div p span{
+	margin-left : 21px;
+}
+
+#productOptionInfoArticle .productAttributeSelect{
+	width : 120px;
+}
+
+/*하단 버틍 입력부*/
+#productSubmitArticle{
+	text-align : center;
+}
+
+#insertProductBtn{
+	width : 150px;
+	font-size: 15px;
+	
+}

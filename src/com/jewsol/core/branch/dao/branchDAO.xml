@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="core.branch">
+	<select id="getBranchList" resultType="branchDto">
+		SELECT * FROM TbBranch WHERE branchType = 2
+	</select>
+	
+	<select id="getBranchSeq" parameterType="int" resultType="int">
+		SELECT branchSeq FROM TbBranch WHERE branchName = #{branchName}
+	</select>
+	
+	<select id="getLastBranchBalance" parameterType="int" resultType="branchBalanceDto">
+		SELECT * FROM TbBranchBalance 
+		WHERE branchSeq = #{branchSeq} 
+		ORDER BY logtime DESC LIMIT 1
+	</select>
+	
+	<insert id="insertBranchRelease" parameterType="releaseSheetDto" keyColumn="branchReleaseSeq">
+		INSERT INTO TbBranchRelease (releaseSheetSeq, releaseGold, releaseLabor)
+		VALUES(#{releaseSheetSeq}, #{totalGoldWeight}, #{totalLabor})
+	  	<selectKey keyProperty="branchReleaseSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertBranchBalance" parameterType="branchBalanceDto">
+		INSERT INTO TbBranchBalance 
+		(branchSeq, branchReleaseSeq, balanceGold, balanceLabor)
+			VALUES
+		(#{branchSeq}, #{branchReleaseSeq}, #{balanceGold}, #{balanceLabor})
+	</insert>
+  </mapper>

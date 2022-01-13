@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="core.plate">
+  	<select id="getPlateList" resultType="plateDto">
+  		SELECT * FROM TbPlate ORDER BY plateSeq
+  	</select>
+  	
+  	<select id="getPlatePrice" parameterType="int" resultType="int">
+  		SELECT platePrice FROM TbPlate WHERE plateSeq = #{plateSeq}
+  	</select>
+  </mapper> 

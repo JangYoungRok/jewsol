@@ -1,0 +1,114 @@
+@CHARSET "UTF-8";
+
+#searchPanel{
+	border-bottom : 1px solid black;
+	height : 35px;
+	font-size :14px;
+	padding-top: 10px;
+	padding-left: 30px;
+}
+
+#searchPanel select{
+	margin-right : 10px;
+	width : 50px;
+}
+
+#searchPanel input{
+	margin-right : 10px;
+	width : 60px;
+}
+
+#searchPanel input[type="button"]{
+	width : 100px;
+}
+
+#productPanel{
+	font-size: 16px;
+	float: left;
+	width : 450px;
+	height: 130px;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+#productPanel p{
+	margin-left:20px;
+	margin-top : 10px;
+	float: left;
+}
+
+#productPanel p:last-child input{
+	font-size: 16px;
+	width:100px;
+	text-align:center;
+}
+#productPanel p input{
+	width:150px;
+}
+
+#productPanel img{
+	width : 130px;
+	height : 100px;
+}
+
+#optionPanel{
+	border-bottom : 1px solid black;
+	padding-top:15px;
+	height: 115px;
+	font-size: 16px;
+	line-height:20px;
+}
+
+#optionPanel p{
+	float: left;
+	margin-left : 30px;
+}
+
+#optionPanel input{
+	width : 130px;
+
+}
+
+#optionPanel input[type="button"]{
+	margin-left : 85px;
+	width : 100px;
+}
+
+#optionDetailPanel{
+	clear : both;
+	height : 320px;
+	overflow: hidden;
+}
+
+#optionDetailPanel div{
+	float : left;
+	height : 320px;
+	width : 199px;
+	overflow: hidden;
+	border-right : 1px solid black;
+}
+
+#optionDetailPanel div:last-child{
+	border-right : 0px;
+}
+
+#optionDetailPanel div p.productOption_title{
+	height : 31px;
+	text-align: center;
+	font-weight : bold;
+	line-height: 30px;
+}
+
+#optionDetailPanel div p{
+	height : 31px;
+}
+
+#optionDetailPanel div p input{
+	width : 15px;
+	margin-left : 5px;
+}
+
+#optionDetailPanel div p select{
+	width: 75px;
+	margin-left : 5px;
+}

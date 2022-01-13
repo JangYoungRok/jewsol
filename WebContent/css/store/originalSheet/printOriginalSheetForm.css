@@ -1,0 +1,129 @@
+@CHARSET "UTF-8";
+#triggerPanel{
+	border-bottom : 1px solid black;
+	height : 35px;
+	font-size :14px;
+	padding-top: 10px;
+	padding-left: 30px;
+}
+
+#setYesterdayBtn{
+	margin-right : 10px;
+}
+
+#originalSheetDate{
+	text-align : center;
+	margin-right : 10px;
+	width : 70px;
+}
+
+#setTomorrowBtn{
+	margin-right : 20px;
+}
+
+#originalSheetListPanel{
+	font-size: 14px;
+	float: left;
+	width : 200px;
+	height: 454px;
+	border-right: 1px solid black;
+	overflow: auto;
+}
+
+#originalSheetList{
+	margin-left : auto;
+	margin-right : auto;
+	border-collapse : collapse;
+	text-align : center;
+	line-height : 1.5;
+	border-top : 1px solid lightgray;
+	border-bottom : 1px solid lightgray;
+}
+
+#originalSheetList thead th{
+	font-size : 13px;
+	vertical-align: top;
+	background-color: lightgray;
+	border-right : 1px solid black;
+	width : 98px;
+}
+
+#originalSheetList thead th:last-child{
+	border-right : 0px;
+}
+
+#originalSheetList tbody td{
+	font-size : 12px;
+	vertical-align: top;
+	border-right : 1px solid black;
+}
+#originalSheetList tbody td:last-child{
+	border-right : 0px;
+}
+#originalSheetContentPanel{
+	height: 454px;
+	overflow: auto;
+}
+
+#originalSheetContent{
+	margin-left : auto;
+	margin-right : auto;
+	border-collapse : collapse;
+	text-align : center;
+	line-height : 1.5;
+	border-top : 1px solid lightgray;
+	border-bottom : 1px solid lightgray;
+}
+
+#originalSheetContent thead th{
+	font-size : 13px;
+	vertical-align: top;
+	background-color: lightgray;
+	border-right : 1px solid black;
+	width : 60px;
+}
+
+#originalSheetContent thead th:last-child{
+	border-right : 0px;
+}
+
+#originalSheetContent tbody td{
+	font-size : 12px;
+	vertical-align: top;
+	border-right : 1px solid black;
+}
+#originalSheetContent tbody td:last-child{
+	border-right : 0px;
+}
+
+#originalSheetContent p{
+	font-size : 11px;
+	overflow: hidden;
+	text-align: center;
+	height : 29px;
+	line-height: 30px;
+}
+#originalSheetContent p.orderNumber{
+	width : 40px;
+}
+#originalSheetContent p.orderK{
+	width : 40px;
+}
+#originalSheetContent p.customerName{
+	width : 80px;
+}
+#originalSheetContent p.storeProductName{
+	width : 100px;
+}
+#originalSheetContent p.orderSize{
+	width : 40px;
+}
+#originalSheetContent p.orderColor{
+	width : 70px;
+}
+#originalSheetContent p.optionName{
+	width : 100px;
+}
+#originalSheetContent p.orderEtc{
+	width : 260px;
+}

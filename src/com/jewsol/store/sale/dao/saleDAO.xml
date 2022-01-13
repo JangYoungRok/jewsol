@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.sale">
+	<select id="getSaleTypeList" resultType="saleTypeDto">
+		SELECT * FROM TbSaleType ORDER BY saleTypeSeq
+	</select>
+	
+	<select id="getOrderListForSale" parameterType="int" resultType="orderForSaleDto">
+		<!-- SELECT * FROM ViewOrderForSale WHERE customerSeq = #{customerSeq} AND orderState = 6 AND stockLocationType = 'O'
+		ORDER BY orderK, storeProductName -->
+		
+	 SELECT 
+	 	odr.orderSeq, 
+		odr.customerSeq,
+		odrd.orderK,
+		sp.storeProductName,
+		sp.storeProductImage,
+		odro.orderOptionName,
+		ifnull(sum(odroc.orderOptionCzQty),0) totalCzQty,
+		odrw.orderWeight,
+		odrw.orderSaleWeight,
+		odrp.orderSalePrice,
+		odrp.orderReleasePrice,
+		odrd.orderState,
+		cs.stockLocationType
+		FROM
+			(
+				SELECT orderSeq FROM TbOrder 
+				WHERE TbOrder.customerSeq = #{customerSeq}
+			) dataOdr JOIN TbOrder odr on dataOdr.orderSeq = odr.orderSeq
+		
+		LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+		LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+		LEFT JOIN TbOrderPrice odrp ON odr.orderSeq = odrp.orderSeq
+		LEFT JOIN TbOrderWeight odrw ON odr.orderSeq = odrw.orderSeq
+		LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+		LEFT JOIN TbOrderOptionCz odroc ON odro.orderOptionSeq = odroc.orderOptionSeq
+		LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+		
+		WHERE orderState = 6 AND stockLocationType = 'O'
+		
+		GROUP BY odr.orderSeq
+		ORDER BY orderK, storeProductName	
+	</select>
+	
+	<insert id="insertSale" parameterType="saleDto">
+		INSERT INTO TbSale(
+			saleSheetSeq,
+			orderSeq,
+			salePrice,
+			saleWeight
+		)VALUES(
+			#{saleSheetSeq},
+			#{orderSeq},
+			#{salePrice},
+			#{saleWeight}
+		
+		)
+	</insert>
+	
+	<delete id="deleteSaleSheet" parameterType="int">
+		DELETE FROM TbSale
+		WHERE saleSheetSeq = #{saleSheetSeq} 
+	</delete>
+  </mapper>

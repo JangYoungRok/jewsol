@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.orderOption">
+
+  	<select id="getOrderOptionCzList" parameterType="int" resultType="orderOptionCzDto">
+  		SELECT * FROM TbOrderOptionCz WHERE orderOptionSeq = #{orderOptionSeq}
+  	</select>
+  	
+  	<select id="getOrderOptionStoneList" parameterType="int" resultType="orderOptionStoneDto">
+  		SELECT * FROM TbOrderOptionStone WHERE orderOptionSeq = #{orderOptionSeq}
+  	</select>
+  	
+  	<select id="getOrderOptionPartList" parameterType="int" resultType="orderOptionPartDto">
+  		SELECT * FROM TbOrderOptionPart WHERE orderOptionSeq = #{orderOptionSeq}
+  	</select>
+  	
+  	<select id="getOrderOptionAddList" parameterType="int" resultType="orderOptionAddDto">
+  		SELECT * FROM TbOrderOptionAdd WHERE orderOptionSeq = #{orderOptionSeq}
+  	</select>
+  	
+  	<select id="getOrderOptionSeq" parameterType="int" resultType="int">
+  		SELECT orderOptionSeq FROM TbOrderOption WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getOrderOptionName" parameterType="int" resultType="String">
+  		SELECT orderOptionName FROM TbOrderOption WHERE orderOptionSeq = #{orderOptionSeq}
+  	</select>
+  	
+  	<select id="getStoreProductSeq" parameterType="int" resultType="int">
+  		SELECT storeProductSeq FROM TbOrder WHERE orderSeq = (SELECT orderSeq FROM TbOrderOption WHERE orderOptionSEq = #{orderOptionSeq})
+  	</select>
+  	
+  	<select id="getOrderOptionLabor" parameterType="int" resultType="int">
+  		SELECT orderOptionLabor FROM TbOrderOption WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getOrderOptionPrice" parameterType="int" resultType="int">
+  		SELECT orderOptionPrice FROM TbOrderOption WHERE orderOptionSeq = #{orderOptionSeq}
+  	</select>
+  
+  	<insert id="insertOrderOption" parameterType="orderOptionDto" keyColumn="orderOptionSeq">
+  		INSERT INTO TbOrderOption(orderSeq, orderOptionName)
+  		VALUES(#{orderSeq}, #{orderOptionName})
+  	<selectKey keyProperty="orderOptionSeq" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+  	</insert>
+  	
+  	<insert id="insertOrderOptionCz" parameterType="orderOptionCzDto">
+  		INSERT INTO TbOrderOptionCz(orderOptionSeq, czSeq, orderOptionCzQty, orderOptionCzName, orderOptionCzSize, orderOptionCzPrice, orderOptionCzLabor)
+  		VALUES(#{orderOptionSeq}, #{czSeq}, #{orderOptionCzQty}, #{orderOptionCzName}, #{orderOptionCzSize}, #{orderOptionCzPrice}, #{orderOptionCzLabor})
+  	</insert>
+  
+ 	<insert id="insertOrderOptionStone" parameterType="orderOptionStoneDto">
+ 		INSERT INTO TbOrderOptionStone(orderOptionSeq, stoneSeq, orderOptionStoneQty, orderOptionStoneName, orderOptionStoneSize, orderOptionStonePrice, orderOptionStoneLabor)
+ 		VALUES(#{orderOptionSeq}, #{stoneSeq}, #{orderOptionStoneQty}, #{orderOptionStoneName}, #{orderOptionStoneSize}, #{orderOptionStonePrice}, #{orderOptionStoneLabor})
+ 	</insert>
+ 	
+ 	<insert id="insertOrderOptionPart" parameterType="orderOptionPartDto">
+ 		INSERT INTO TbOrderOptionPart(orderOptionSeq, partSeq, orderOptionPartName, orderOptionPartPrice, orderOptionPartLabor)
+ 		VALUES(#{orderOptionSeq}, #{partSeq}, #{orderOptionPartName}, #{orderOptionPartPrice}, #{orderOptionPartLabor})
+ 	</insert>
+ 	
+ 	<insert id="insertOrderOptionAdd" parameterType="orderOptionAddDto">
+ 		INSERT INTO TbOrderOptionAdd(orderOptionSeq, addSeq, orderOptionAddName, orderOptionAddPrice, orderOptionAddLabor)
+ 		VALUES(#{orderOptionSeq}, #{addSeq}, #{orderOptionAddName}, #{orderOptionAddPrice}, #{orderOptionAddLabor})
+ 	</insert>
+ 	
+ 	
+ 	<update id="initOrderOptionLabor" parameterType="int">
+ 		UPDATE TbOrderOption SET TbOrderOption.orderOptionLabor = (SELECT(
+	 		(SELECT IFNULL(storeProductLabor,0) FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq=
+					(SELECT storeProductSeq FROM TbOrder WHERE TbOrder.orderSeq = TbOrderOption.orderSeq)) +
+			(SELECT IFNULL(SUM(orderOptionCzLabor),0) FROM TbOrderOptionCz WHERE orderOptionSeq = #{orderOptionSeq}) +
+			(SELECT IFNULL(SUM(orderOptionStoneLabor),0)  FROM TbOrderOptionStone WHERE orderOptionSeq = #{orderOptionSeq}) +
+			(SELECT IFNULL(SUM(orderOptionPartLabor),0)  FROM TbOrderOptionPart WHERE orderOptionSeq = #{orderOptionSeq}) +
+			(SELECT IFNULL(SUM(orderOptionAddLabor),0)  FROM TbOrderOptionAdd WHERE orderOptionSeq = #{orderOptionSeq})
+		)) WHERE TbOrderOption.orderOptionSeq = #{orderOptionSeq}
+ 	</update>
+ 	
+  	<update id="initOrderOptionPrice" parameterType="int">
+  		UPDATE TbOrderOption SET TbOrderOption.orderOptionPrice =(SELECT(
+			(SELECT IFNULL(storeProductPrice,0) FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq=
+				(SELECT storeProductSeq FROM TbOrder WHERE TbOrder.orderSeq = TbOrderOption.orderSeq)) +
+			(SELECT IFNULL(SUM(orderOptionCzPrice),0) FROM TbOrderOptionCz WHERE orderOptionSeq = #{orderOptionSeq}) +
+			(SELECT IFNULL(SUM(orderOptionStonePrice),0)  FROM TbOrderOptionStone WHERE orderOptionSeq = #{orderOptionSeq}) +
+			(SELECT IFNULL(SUM(orderOptionPartPrice),0)  FROM TbOrderOptionPart WHERE orderOptionSeq = #{orderOptionSeq}) +
+			(SELECT IFNULL(SUM(orderOptionAddPrice),0)  FROM TbOrderOptionAdd WHERE orderOptionSeq = #{orderOptionSeq})
+		)) WHERE TbOrderOption.orderOptionSeq = #{orderOptionSeq}
+  	</update>
+  	
+  	<update id="updateOrderOption" parameterType="orderOptionDto">
+  		UPDATE TbOrderOption SET
+  			orderOptionName = #{orderOptionName}
+  		WHERE orderOptionSeq = #{orderOptionSeq}
+  	</update>
+  	
+  	<delete id="deleteOrderOptionCz" parameterType="int">
+  		DELETE FROM TbOrderOptionCz WHERE orderOptionSeq = #{orderOptionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOrderOptionStone" parameterType="int">
+  		DELETE FROM TbOrderOptionStone WHERE orderOptionSeq = #{orderOptionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOrderOptionPart" parameterType="int">
+  		DELETE FROM TbOrderOptionPart WHERE orderOptionSeq = #{orderOptionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOrderOptionAdd" parameterType="int">
+  		DELETE FROM TbOrderOptionAdd WHERE orderOptionSeq = #{orderOptionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOrderOption" parameterType="int">
+  		DELETE FROM TbOrderOption WHERE orderOptionSeq = #{orderOptionSeq}
+  	</delete>
+ 
+  	
+  </mapper>

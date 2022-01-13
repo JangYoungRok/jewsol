@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+#triggerPanel{
+	height : 110px;
+	border-bottom : 1px solid black;
+	line-height : 35px;
+}
+#triggerPanel input{
+	width : 80px;
+}
+
+#triggerPanel label{
+	margin-left : 15px;
+}
+
+#triggerPanel #saleSheetDate{
+	margin-left : 15px;
+	text-align : center;
+	width : 70px;
+}
+
+#triggerPanel #customerListDiv{
+	position : relative;
+	left : 155px;
+	top : -75px;
+	width : 160px;
+}
+
+#triggerPanel #customerListDiv ul{
+	width : 160px;
+	height : 300px;
+	border : 1px solid black;
+	position : absolute;
+	background-color : white;
+}
+
+#triggerPanel #customerListDiv ul li{
+	display : block;
+	width : 160px;
+	height : 24px;
+}

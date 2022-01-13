@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.originalSheet">
+  
+  	
+  
+  	<select id="getOriginalSheetResult" parameterType="java.util.Map" resultType="originalSheetDto">
+  		SELECT * FROM TbOriginalSheet WHERE branchSeq = #{branchSeq} AND originalSheetNumber = #{originalSheetNumber} AND originalSheetDate = CURRENT_DATE()
+  	</select>
+  	
+  	<select id="getOriginalSheetSeq" parameterType="originalSheetDto" resultType="int">
+  		SELECT originalSheetSeq FROM TbOriginalSheet WHERE originalSheetDate = #{originalSheetDate} AND originalSheetNumber = #{originalSheetNumber} AND branchSeq = #{branchSeq}
+  	</select>
+  	
+  	<select id="getOriginalSheetList" parameterType="originalSheetDto" resultType="originalSheetDto">
+  		SELECT * FROM TbOriginalSheet WHERE originalSheetDate = #{originalSheetDate} AND branchSeq = #{branchSeq} AND originalSheetClose = 'T'
+  	</select>
+  	
+  	<select id="getOriginalSheet" parameterType="int" resultType="originalSheetDto">
+  		SELECT * FROM TbOriginalSheet WHERE originalSheetSeq = #{originalSheetSeq}
+  	</select>
+  	
+  	<insert id="insertOriginalSheet" parameterType="originalSheetDto">
+  		INSERT INTO TbOriginalSheet(branchSeq, insertMemberSeq, originalSheetDate, originalSheetNumber)
+  		VALUES(#{branchSeq},#{insertMemberSeq},CURRENT_DATE(),#{originalSheetNumber})
+  	</insert>
+  	
+  	<update id="closeOriginalSheet" parameterType="int">
+  		UPDATE TbOriginalSheet SET originalSheetClose = 'T',
+  		originalSheetQty = (SELECT COUNT(*) FROM TbOrder WHERE originalSheetSeq = #{originalSheetSeq})
+  		WHERE originalSheetSeq = #{originalSheetSeq}
+  	</update>
+  </mapper>

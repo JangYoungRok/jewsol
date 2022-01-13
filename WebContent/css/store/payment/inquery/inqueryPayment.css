@@ -1,0 +1,110 @@
+@CHARSET "UTF-8";
+#triggerPanel{
+	height : 110px;
+	border-bottom : 1px solid black;
+	line-height : 35px;
+}
+#triggerPanel input{
+	width : 80px;
+}
+#triggerPanel label{
+	margin-left : 15px;
+}
+#triggerPanel #paymentDate{
+	margin-left : 15px;
+	text-align : center;
+	width : 70px;
+}
+
+#triggerPanel #paymentContent{
+	width : 158px;
+}
+
+#triggerPanel #customerListDiv{
+	position : relative;
+	left : 155px;
+	top : -5px;
+	width : 160px;
+}
+
+#triggerPanel #customerListDiv ul{
+	width : 160px;
+	height : 300px;
+	border : 1px solid black;
+	position : absolute;
+	background-color : white;
+}
+
+#triggerPanel #customerListDiv ul li{
+	display : block;
+	width : 160px;
+	height : 24px;
+}
+
+#paymentListPanel{
+	height : 380px;
+	overflow : auto;
+}
+
+#paymentListPanel #paymentList{
+	border-collapse : collapse;
+	margin : 0 auto;
+	margin-top : 10px;
+}
+
+#paymentListPanel #paymentList th{
+	vertical-align : middle;
+	border : 1px solid black;
+}
+
+#paymentListPanel #paymentList th div{
+	height : 40px;
+	line-height : 40px;
+}
+
+#paymentListPanel #paymentList td{
+	vertical-align : middle;
+	border : 1px solid black;
+}
+
+#paymentListPanel #paymentList td div{
+	height : 80px;
+}
+
+#paymentListPanel #paymentList th .paymentDate{
+	width : 140px;
+}
+
+#paymentListPanel #paymentList th .paymentContent{
+	width : 200px;
+}
+#paymentListPanel #paymentList th .lastBalance,
+#paymentListPanel #paymentList th .payment,
+#paymentListPanel #paymentList th .balance{
+	width : 120px;
+}
+
+#paymentListPanel #paymentList td .paymentDate{
+	width : 140px;
+	line-height : 80px;
+	text-align : center;
+	overflow : hidden;
+	font-size : 13px;
+}
+
+#paymentListPanel #paymentList td .paymentContent{
+	width : 200px;
+	line-height : 80px;
+	text-align : center;
+	overflow : hidden;
+	font-size : 13px;
+}
+#paymentListPanel #paymentList td .lastBalance,
+#paymentListPanel #paymentList td .payment,
+#paymentListPanel #paymentList td .balance{
+	margin-left : 3px;
+	width : 140px;
+	line-height : 26px;
+	font-size : 12px;
+	overflow : hidden;
+}

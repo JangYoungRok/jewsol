@@ -1,0 +1,128 @@
+@CHARSET "UTF-8";
+#triggerPanel{
+	border-bottom : 1px solid black;
+	height : 35px;
+	font-size :14px;
+	padding-top: 10px;
+	padding-left: 30px;
+}
+
+img{
+	margin-top : 2px;
+	width : 75px;
+	height : 60px;
+}
+
+#orderDate{
+	width : 80px;
+	margin-right : 10px;
+	text-align: center;
+}
+
+#setYesterdayBtn{
+	margin-right : 10px;
+}
+
+#minusPanelNumberBtn{
+	margin-right : 10px;
+}
+
+#plusPanelNumberBtn{
+	margin-left : 10px;
+	margin-right : 10px;
+}
+
+#getPanelListBtn{
+	margin-right : 210px;
+}
+
+#panelNumber{
+	width : 30px;
+	text-align: center;
+}
+
+#panelLength{
+	width : 30px;
+	text-align: center;
+}
+
+#setTomorrowBtn{
+	margin-right : 20px;
+}
+
+#orderListPanel{
+	height: 454px;
+	overflow: auto;
+}
+
+#orderList{
+	margin-left : auto;
+	margin-right : auto;
+	border-collapse : collapse;
+	text-align : center;
+	line-height : 1.5;
+	border-top : 1px solid lightgray;
+	border-bottom : 1px solid lightgray;
+}
+#orderList tbody tr{
+	border-bottom : 1px dotted black;
+}
+
+#orderList tbody td{
+	vertical-align: middle;
+	border-right : 1px solid black;
+	
+}
+#orderList tbody td:last-child{
+	border-right : 0px;
+}
+
+#orderList div{
+	font-size : 11px;
+	overflow: hidden;
+	text-align: center;
+	height : 60px;
+	line-height: 60px;
+}
+
+#orderList div.panelNumber{
+	width : 55px;
+}
+#orderList div.branchName{
+	width : 40px;
+}
+#orderList div.orderK{
+	width : 30px;
+}
+#orderList div.customerName{
+	width : 70px;
+}
+#orderList div.storeProductName{
+	width : 80px;
+}
+#orderList div.orderSize{
+	width : 40px;
+}
+#orderList div.orderColor{
+	width : 70px;
+}
+#orderList div.optionName{
+	width : 90px;
+}
+#orderList div.orderEtc{
+	width : 240px;
+}
+
+.released{
+	background-color: gray;
+	color: white;
+}
+
+.check{
+	background-color: lightgray;
+	cursor: pointer;
+}
+
+.unReleased{
+	cursor: pointer;
+}

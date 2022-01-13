@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.add">
+  	<select id="getAddList" parameterType="int" resultType="addDto">
+  		SELECT * FROM TbAdd WHERE branchSeq = #{branchSeq} AND addInUse = 'T' ORDER BY addName
+  	</select>
+  	
+  	<select id="getAdd" parameterType="int" resultType="addDto">
+  		SELECT * FROM TbAdd WHERE addSeq=#{addSeq}
+  	</select>
+  	
+  	<insert id="insertAdd" parameterType="addDto">
+  		INSERT INTO TbAdd(
+  			branchSeq,
+  			addName,
+  			addPrice,
+  			addCost,
+  			addLabor
+  		)
+  		VALUES(
+  			#{branchSeq},
+  			#{addName},
+  			#{addPrice},
+  			#{addCost},
+  			#{addLabor}
+  		)
+  	</insert>
+  	
+  	<update id="notInUseAdd" parameterType="int">
+  		UPDATE TbAdd SET addInUse = 'F' WHERE addSeq = #{addSeq}
+  	</update>
+  
+  </mapper>

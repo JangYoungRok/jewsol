@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.part">
+  	<insert id="insertPart" parameterType="partDto">
+  		
+  		INSERT INTO TbPart(
+  			branchSeq,
+  			partAttributeSeq,
+  			partAttribute,
+  			partName,
+  			partPrice,
+  			partCost,
+  			partLabor
+  		)
+  		SELECT
+  			#{branchSeq},
+  			#{partAttributeSeq},
+  			partAttribute,
+  			#{partName},
+  			#{partPrice},
+  			#{partCost},
+  			#{partLabor}
+  		 FROM TbPartAttribute WHERE partAttributeSeq = #{partAttributeSeq}
+  	</insert>
+  	
+  	<select id="getPartAttributeList" parameterType="int" resultType="partAttributeDto">
+  		SELECT * FROM TbPartAttribute WHERE typeMainSeq = #{typeMainSeq}
+  	</select>
+  	
+  	<select id="getTypeMainSeq" parameterType="int" resultType="int">
+  		SELECT typeMainSeq FROM TbType WHERE TbType.typeSeq = #{typeSeq}
+  	</select>
+  	
+  	<select id="getPartList" parameterType="int" resultType="partDto">
+  		SELECT * FROM TbPart
+  		 WHERE branchSeq = #{branchSeq} AND partInUse = 'T' ORDER BY partAttribute, partName
+  	</select>
+  	
+  	<select id="getPartListByPartAttributeSeq" parameterType="partDto" resultType="partDto">
+  		SELECT * FROM TbPart WHERE branchSeq = #{branchSeq} AND partAttributeSeq = #{partAttributeSeq} AND partInUse = 'T' ORDER BY partAttribute, partName
+  	</select>
+  	
+  	<select id="getPart" parameterType="int" resultType="partDto">
+  		SELECT * FROM TbPart WHERE partSeq=#{partSeq}
+  	</select>
+  	
+  	<select id="getPartAttributeSeq" parameterType="int" resultType="int">
+  		SELECT partAttributeSeq FROM TbPart WHERE partSeq = #{partSeq}
+  	</select>
+  	
+  	<update id="notInUsePart" parameterType="int">
+  		UPDATE TbPart SET partInUse = 'F' WHERE partSeq = #{partSeq}
+  	</update>
+  	
+  	
+  </mapper>

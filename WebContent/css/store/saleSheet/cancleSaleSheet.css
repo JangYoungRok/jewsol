@@ -1,0 +1,172 @@
+@CHARSET "UTF-8";
+img{
+	width : 75px;
+	height : 60px;
+	margin-top : 2px;	
+}
+
+#saleSheetListPanel{
+	float : left;
+	font-size: 14px;
+	vertical-align : top;
+	width : 200px;
+	height : 500px;
+	overflow: auto;
+	border-right : 1px solid black;
+}
+
+#saleSheetListPanel #saleSheetList{
+	border-collapse : collapse;
+	text-align : center;
+}
+#saleSheetListPanel #saleSheetList th{
+	vertical-align : middle;
+	background-color : lightgray;
+	border-right : 1px solid black;
+	
+}
+
+#saleSheetListPanel #saleSheetList th:last-child{
+	border-right : 0px;
+}
+
+#saleSheetListPanel #saleSheetList td{
+	vertial-align : middle;
+	border-right : 1px solid black;
+}
+
+#saleSheetListPanel #saleSheetList td:last-child{
+	border-right : 0px;
+	
+}
+#saleSheetListPanel #saleSheetList tr:last-child{
+	border-bottom : 1px solid black;
+}
+
+#saleSheetListPanel #saleSheetList div{
+	font-size : 10px;
+	height : 25px;
+	overflow : hidden;
+	line-height : 25px;
+}
+
+#saleSheetListPanel #saleSheetList div.saleSheetDate{
+	width : 45px;
+}
+#saleSheetListPanel #saleSheetList div.saleSheetNumber{
+	width : 25px;
+}
+#saleSheetListPanel #saleSheetList div.totalSalePrice{
+	width : 75px;
+}
+#saleSheetListPanel #saleSheetList div.totalGoldWeight{
+	width : 50px;
+}
+
+#column{
+	height : 500px;
+	margin-left : 200px;
+	vertical-align : top;
+	font-size :14px;
+}
+
+#column #triggerPanel{
+	height : 66px;
+	border-bottom : 1px solid black;
+}
+
+#column #triggerPanel div{
+	margin-top : 10xp;
+	line-height : 30px;
+}
+
+#column #triggerPanel #customerListDiv{
+	position : relative;
+	left : 10px;
+	top : -22px;
+	width : 160px;
+}
+
+#column #triggerPanel #customerListDiv ul{
+	width : 160px;
+	height : 300px;
+	border : 1px solid black;
+	position : absolute;
+	background-color : white;
+}
+
+#column #triggerPanel #customerListDiv ul li{
+	display : block;
+	width : 160px;
+	height : 24px;
+}
+
+#column #triggerPanel #customer{
+	width : 120px;
+	margin-left : 10px;
+}
+
+#column #triggerPanel #searchCustomerBtn{
+	margin-left : 5px;
+}
+
+#column #triggerPanel #cancleSaleSheetBtn{
+	margin-left : 10px;
+}
+
+
+#column #orderListPanel{
+	height : 430px;
+	overflow : auto;
+}
+
+#column #orderListPanel #orderList{
+	border-collapse : collapse;
+}
+
+#column #orderListPanel #orderList .checked{
+	background-color : lightgray;
+}
+
+#column #orderListPanel #orderList td{
+	vertical-align : middle;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+}
+
+#column #orderListPanel #orderList div{
+	height : 65px;
+	line-height : 65px;
+	font-size : 10px;
+	overflow : hidden;
+	text-align : center;
+}
+
+#column #orderListPanel #orderList div.orderK{
+	width : 25px;
+}
+
+#column #orderListPanel #orderList div.storeProductImage{
+	width : 80px;
+}
+
+#column #orderListPanel #orderList div.storeProductName{
+	width : 60px;
+}
+
+#column #orderListPanel #orderList div.orderOptionName{
+	width : 80px;
+}
+
+#column #orderListPanel #orderList div.orderWeight{
+	width : 60px;
+}
+#column #orderListPanel #orderList div.orderReleasePrice{
+	width : 100px;
+}
+#column #orderListPanel #orderList .orderSaleWeight{
+	width : 70px;
+}
+#column #orderListPanel #orderList .orderSalePrice{
+	width : 70px;
+}

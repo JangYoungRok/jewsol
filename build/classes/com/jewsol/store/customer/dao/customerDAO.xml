@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.customer">
+  	<resultMap type="customerDto" id="customerResult">
+  		<result property="customerSeq" column="customerSeq"/>
+  		<result property="branchSeq" column="branchSeq"/>
+  		<result property="customerName" column="customerName"/>
+  		<result property="customerSection" column="customerSection"/>
+  		<result property="customerArea" column="customerArea"/>
+  		<result property="stockLocationSeq" column="stockLocationSeq"/>
+  		<result property="customerInUse" column="customerInUse"/>
+  		<result property="stockLocationType" column="stockLocationType"/>
+  	</resultMap>
+  	
+  	<select id="getCustomer" parameterType="int" resultType="customerDto">
+  		SELECT * FROM TbCustomer WHERE customerSeq = #{customerSeq}
+  	</select>
+  	
+  	<select id="getCustomerList" parameterType="int" resultType="customerDto">
+  		SELECT * FROM TbCustomer WHERE branchSeq = #{branchSeq} AND customerInUse = 'T' ORDER BY customerArea, customerSection, customerName
+  	</select>
+  	
+  	<select id="checkOverLapCustomerName" resultType="int" parameterType="customerDto">
+  		SELECT COUNT(*) FROM TbCustomer 
+  		WHERE
+  		customerArea = #{customerArea} AND
+  		customerSection = #{customerSection} AND
+  		customerName = #{customerName} AND
+  		branchSeq = #{branchSeq}
+  	</select>
+  	
+  	<select id="getCustomerKeyWord" resultType="customerDto" parameterType="customerKeywordDto">
+  		SELECT * FROM TbCustomer WHERE customerName LIKE CONCAT('%',#{keyword},'%') AND branchSeq = #{branchSeq}
+  		ORDER BY customerName, customerSection, customerArea LIMIT 10
+  	</select>
+  	
+  	<select id="getLastCustomerBalance" parameterType="int" resultType="customerBalanceDto">
+  		SELECT * FROM TbCustomerBalance
+  		WHERE customerSeq = #{customerSeq}
+  		ORDER BY customerBalanceSeq DESC LIMIT 1
+  	</select> 
+  	
+  	<insert id="insertCustomer" parameterType="customerDto">
+  		INSERT INTO TbCustomer(
+  			branchSeq,
+  			customerName,
+  			customerSection,
+  			customerArea,
+  			stockLocationSeq,
+  			stockLocationType
+  		)VALUES(
+  			#{branchSeq},
+  			#{customerName},
+  			#{customerSection},
+  			#{customerArea},
+  			#{stockLocationSeq},
+  			#{stockLocationType}
+  		)
+  	</insert>
+  	
+  	<insert id="insertCustomerBalance" parameterType="customerBalanceDto">
+  		INSERT INTO TbCustomerBalance(
+  			customerSeq,
+  			saleSheetSeq,
+  			paymentSeq,
+  			customerBalanceCash,
+  			customerBalanceGold
+  		)VALUES(
+  			#{customerSeq},
+  			#{saleSheetSeq},
+  			#{paymentSeq},
+  			#{customerBalanceCash},
+  			#{customerBalanceGold}
+  		)
+  	</insert> 
+  	
+  	<update id="notInUseCustomer" parameterType="int">
+  		UPDATE TbCustomer SET customerInUse = 'F' WHERE customerSeq=#{customerSeq}
+  	</update>
+  	
+  </mapper>

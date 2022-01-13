@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="factory.panel">
+	<insert id="insertPanel" parameterType="panelDto" keyColumn="panelSeq">
+		INSERT INTO TbPanel (panelGroup, panelNumber, panelDate)
+		VALUES (#{panelGroup}, #{panelNumber}, #{panelDate})
+		<selectKey keyProperty="panelSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="getPanelList" parameterType="String" resultType="panelDto">
+		SELECT * FROM TbPanel WHERE panelDate = #{date} ORDER BY panelNumber
+	</select>
+	
+	<select id="getOrderForPanelList" parameterType="int" resultType="viewOrderForPanelDto">
+		<!-- SELECT * FROM ViewOrderForPanel WHERE panelSeq = #{panelSeq} ORDER BY orderNumber -->
+		SELECT odr.orderSeq,
+			odr.panelSeq,
+			odr.orderNumber,
+			odrd.orderK,
+			odrd.orderMainColor,
+			odrd.orderSubColor,
+			odrd.orderEtc,
+			odrd.orderSize,
+			odrd.orderState,
+			odrd.orderHurry,
+			TRIM(CONCAT(IFNULL(cs.customerSection,''),' ',IFNULL(cs.customerArea,''),' ',cs.customerName)) customerName,
+			sp.storeProductImage,
+			sp.storeProductName,
+			sp.storeProductPrice,
+			odro.orderOptionName,
+			GROUP_CONCAT(oropa.orderOptionAddName) orderOptionAddName,
+			GROUP_CONCAT(oropp.orderOptionPartName) orderOptionPartName,
+			br.branchName
+			
+			 FROM
+				(
+					SELECT orderSeq FROM TbOrder panelOdr
+					WHERE panelOdr.panelSeq = #{panelSeq}
+				) dataOdr JOIN TbOrder odr ON dataOdr.orderSeq = odr.orderSeq
+			LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+			LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+			LEFT JOIN TbOrderOptionAdd oropa ON odro.orderOptionSeq = oropa.orderOptionSeq
+			LEFT JOIN TbOrderOptionPart oropp ON odro.orderOptionSeq = oropp.orderOptionSeq
+			LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+			LEFT JOIN TbBranch br ON cs.branchSeq = br.branchSeq
+			LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+			
+			GROUP BY odr.orderSeq
+			ORDER BY orderNumber
+	</select>
+	
+	<select id="getOrderForStickerList" parameterType="String" resultType="viewOrderForStickerDto">
+		SELECT * FROM ViewOrderForSticker WHERE originalSheetDate = #{orderDate} ORDER BY panelNumber
+	</select>
+	
+	<select id="getPanelSeq" parameterType="panelDto" resultType="int">
+		SELECT IF(COUNT(panelSeq)=0,0,panelSeq)panelSeq FROM TbPanel WHERE panelDate = #{panelDate} AND panelNumber = #{panelNumber}
+	</select>
+	
+	<select id="getPanelLength" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM TbPanel WHERE panelDate = #{orderDate}	
+	</select>
+	
+	<select id="getOrderClose" parameterType="String" resultType="String">
+		SELECT orderClose FROM TbOrderDate WHERE orderDate = #{orderDate}	
+	</select>
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.option">
+  
+   	<insert id="insertOption" parameterType="optionDto" keyColumn="optionSeq">
+  		INSERT INTO TbOption(storeProductSeq,optionName,optionNumber)
+  		VALUES(#{storeProductSeq},#{optionName},#{optionNumber})
+  	<selectKey keyProperty="optionSeq" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+  	</insert>
+  	
+  	<insert id="insertOptionCz" parameterType="optionCzDto">
+  		INSERT INTO TbOptionCz(optionSeq,czSeq,czName,czSize,optionCzQty,optionCzPrice,optionCzLabor)
+  		VALUES(#{optionSeq},#{czSeq},#{czName},#{czSize},#{optionCzQty},#{optionCzPrice},#{optionCzLabor})
+  	</insert>
+  	
+  	<insert id="insertOptionStone" parameterType="optionStoneDto">
+  		INSERT INTO TbOptionStone(optionSeq,stoneSeq,stoneName,stoneSize,optionStoneQty,optionStonePrice,optionStoneLabor)
+  		VALUES(#{optionSeq},#{stoneSeq},#{stoneName},#{stoneSize},#{optionStoneQty},#{optionStonePrice},#{optionStoneLabor})
+  	</insert>
+  	
+  	<insert id="insertOptionPart" parameterType="optionPartDto">
+  		INSERT INTO TbOptionPart(optionSeq,partSeq,partName,optionPartPrice,optionPartLabor)
+  		VALUES(#{optionSeq},#{partSeq},#{partName},#{optionPartPrice},#{optionPartLabor})
+  	</insert>
+  	
+  	<insert id="insertOptionAdd" parameterType="optionAddDto">
+  		INSERT INTO TbOptionAdd(optionSeq,addSeq,addName,optionAddPrice,optionAddLabor)
+  		VALUES(#{optionSeq},#{addSeq},#{addName},#{optionAddPrice},#{optionAddLabor})
+  	</insert>
+  	
+  	<update id="initOptionLabor" parameterType="int">
+  		UPDATE TbOption SET TbOption.optionLabor = (SELECT(
+  			(SELECT IFNULL(storeProductLabor,0) FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq=
+				TbOption.storeProductSeq) +
+			(SELECT IFNULL(SUM(optionCzLabor),0) FROM TbOptionCz WHERE optionSeq = #{optionSeq}) +
+			(SELECT IFNULL(SUM(optionStoneLabor),0)  FROM TbOptionStone WHERE optionSeq = #{optionSeq}) +
+			(SELECT IFNULL(SUM(optionPartLabor),0)  FROM TbOptionPart WHERE optionSeq = #{optionSeq}) +
+			(SELECT IFNULL(SUM(optionAddLabor),0)  FROM TbOptionAdd WHERE optionSeq = #{optionSeq})
+		)) WHERE TbOption.optionSeq = #{optionSeq}
+  	</update>
+  	
+  	<update id="initOptionPrice" parameterType="int">
+  		UPDATE TbOption SET TbOption.optionPrice =(SELECT(
+			(SELECT IFNULL(storeProductPrice,0) FROM TbStoreProduct WHERE TbStoreProduct.storeProductSeq=
+				TbOption.storeProductSeq) +
+			(SELECT IFNULL(SUM(optionCzPrice),0) FROM TbOptionCz WHERE optionSeq = #{optionSeq}) +
+			(SELECT IFNULL(SUM(optionStonePrice),0)  FROM TbOptionStone WHERE optionSeq = #{optionSeq}) +
+			(SELECT IFNULL(SUM(optionPartPrice),0)  FROM TbOptionPart WHERE optionSeq = #{optionSeq}) +
+			(SELECT IFNULL(SUM(optionAddPrice),0)  FROM TbOptionAdd WHERE optionSeq = #{optionSeq})
+		)) WHERE TbOption.optionSeq = #{optionSeq}
+  	</update>
+  	
+  	<update id="updateOptionName" parameterType="optionDto">
+  		UPDATE TbOption SET
+  			optionName=#{optionName}
+  		WHERE
+  			storeProductSeq=#{storeProductSeq}
+  	</update>
+  	
+  	<update id="updateOptionNameByOptionSeq" parameterType="optionDto">
+  		UPDATE TbOption SET
+  			optionName = #{optionName}
+  		WHERE
+  			optionSeq = #{optionSeq}
+  	</update>
+  	
+  	<update id="updateOptionCz" parameterType="optionCzDto">
+  		UPDATE TbOptionCz 
+  		SET czName = #{czName},
+  		optionCzLabor = (optionCzQty * #{optionCzLabor}),
+  		optionCzPrice = (optionCzQty * #{optionCzPrice})
+  		WHERE optionCzSeq = #{optionCzSeq}
+  	</update>
+  	
+  	<select id="getOptionName" parameterType="java.util.Map" resultType="String">
+  		SELECT optionName FROM TbOption WHERE storeProductSeq=#{storeProductSeq} AND optionNumber=#{optionNumber}
+  	</select>
+  	
+  	<select id="getOptionNameByOptionSeq" parameterType="int" resultType="String">
+  		SELECT optionName FROM TbOption WHERE optionSeq = #{optionSeq}
+  		
+  	</select>
+  	
+  	<select id="getOption" parameterType="java.util.Map" resultType="optionDto">
+  		SELECT * FROM TbOption WHERE storeProductSeq=#{storeProductSeq} AND optionNumber=#{optionNumber}
+  	</select>
+  	
+  	<select id="getOptionSeq" parameterType="java.util.Map" resultType="int">
+  		SELECT optionSeq FROM TbOption WHERE storeProductSeq=#{storeProductSeq} AND optionNumber=#{optionNumber}
+  	</select>
+  	
+  	<select id="getOptionCzList" parameterType="int" resultType="optionCzDto">
+  		SELECT * FROM TbOptionCz WHERE optionSeq = #{optionSeq} ORDER BY optionSeq
+  	</select>
+  	
+  	<select id="getOptionStoneList" parameterType="int" resultType="optionStoneDto">
+  		SELECT * FROM TbOptionStone WHERE optionSeq = #{optionSeq} ORDER BY optionSeq
+  	</select>
+  	
+  	<select id="getOptionPartList" parameterType="int" resultType="optionPartDto">
+  		SELECT * FROM TbOptionPart WHERE optionSeq = #{optionSeq} ORDER BY optionSeq
+  	</select>
+  	
+  	<select id="getOptionAddList" parameterType="int" resultType="optionAddDto">
+  		SELECT * FROM TbOptionAdd WHERE optionSeq = #{optionSeq} ORDER BY optionSeq
+  	</select>
+  	
+  	<select id="getOptionList" parameterType="int" resultType="optionDto">
+  		SELECT * FROM TbOption WHERE storeProductSeq=#{storeProductSeq} ORDER BY optionNumber
+  	</select>
+  	
+  	<select id="getStoreProductSeq" parameterType="int" resultType="int">
+  		SELECT storeProductSeq FROM TbOption WHERE optionSeq = #{optionSeq}
+  	</select>
+  	
+  	<select id="getOptionByOptionSeq" parameterType="int" resultType="optionDto">
+  		SELECT * FROM TbOption WHERE optionSeq = #{optionSeq}
+  	</select>
+  	
+  	<delete id="deleteOptionCz" parameterType="int">
+  		DELETE FROM TbOptionCz WHERE optionSeq = #{optionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOptionStone" parameterType="int">
+  		DELETE FROM TbOptionStone WHERE optionSeq = #{optionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOptionPart" parameterType="int">
+  		DELETE FROM TbOptionPart WHERE optionSeq = #{optionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOptionAdd" parameterType="int">
+  		DELETE FROM TbOptionAdd WHERE optionSeq = #{optionSeq}
+  	</delete>
+  	
+  	<delete id="deleteOption" parameterType="int">
+  		DELETE FROM TbOption
+  		WHERE optionSeq = #{optionSeq}
+  	</delete>
+  	
+  
+  </mapper>

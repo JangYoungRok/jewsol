@@ -1,0 +1,101 @@
+@CHARSET "UTF-8";
+#triggerPanel{
+	border-bottom : 1px solid black;
+	height : 35px;
+	font-size :14px;
+	padding-top: 10px;
+	padding-left: 30px;
+}
+
+#orderDate{
+	width : 80px;
+	margin-right : 10px;
+	text-align: center;
+}
+
+#setYesterdayBtn{
+	margin-right : 10px;
+}
+
+#setTomorrowBtn{
+	margin-right : 20px;
+}
+
+#orderListPanel{
+	height: 454px;
+	overflow: auto;
+}
+
+#orderList{
+	margin-left : auto;
+	margin-right : auto;
+	border-collapse : collapse;
+	text-align : center;
+	line-height : 1.5;
+	border-top : 1px solid lightgray;
+	border-bottom : 1px solid lightgray;
+}
+
+#orderList thead th{
+	font-size : 11px;
+	vertical-align: top;
+	background-color: lightgray;
+	border-right : 1px solid black;
+}
+
+#orderList thead th:last-child{
+	border-right : 0px;
+}
+#orderList tbody tr{
+	border-bottom : 1px dotted black;
+}
+
+#orderList tbody td{
+	vertical-align: top;
+	border-right : 1px solid black;
+	
+}
+#orderList tbody td:last-child{
+	border-right : 0px;
+}
+
+#orderList p{
+	font-size : 11px;
+	overflow: hidden;
+	text-align: center;
+	height : 29px;
+	line-height: 30px;
+}
+
+#orderList p.panelNumber{
+	width : 50px;
+}
+#orderList p.branchName{
+	width : 40px;
+}
+#orderList p.orderK{
+	width : 30px;
+}
+#orderList p.customerName{
+	width : 80px;
+}
+#orderList p.storeProductName{
+	width : 80px;
+}
+#orderList p.orderSize{
+	width : 40px;
+}
+#orderList p.orderColor{
+	width : 70px;
+}
+#orderList p.optionName{
+	width : 100px;
+}
+#orderList p.orderEtc{
+	width : 250px;
+}
+#orderList p.orderHurry{
+	width : 30px;
+}
+
+

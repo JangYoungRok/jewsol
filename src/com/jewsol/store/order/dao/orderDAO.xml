@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.order">
+ 
+  	<select id="getOrder" parameterType="int" resultType="orderDto">
+  		SELECT * FROM TbOrder WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getTempOrderList" parameterType="int" resultType="viewOrderDto">
+  		<!-- SELECT * FROM ViewOrder WHERE originalSheetSeq = #{originalSheetSeq} ORDER BY orderSeq DESC -->
+  		
+		SELECT 
+
+		odr.originalSheetSeq,
+		odr.orderSeq,
+		od.orderK,
+		od.orderMainColor,
+		od.orderSubColor,
+		od.orderHurry,
+		od.orderEtc,
+		od.orderSize,
+		TRIM(CONCAT(IFNULL(cs.customerSection,''),' ',IFNULL(cs.customerArea,''),' ',cs.customerName)) customerName,
+		sp.storeProductName,
+		orop.orderOptionName,
+		IFNULL(GROUP_CONCAT(oropa.orderOptionAddName) ,'') orderOptionAddName,
+		IFNULL(GROUP_CONCAT(oropp.orderOptionPartName) ,'') orderOptionPartName
+
+		FROM TbOrder odr
+			
+			LEFT JOIN TbOrderDetail od ON odr.orderSeq = od.orderSeq
+			LEFT JOIN TbOrderOption orop ON odr.orderSeq = orop.orderSeq
+			LEFT JOIN TbOrderOptionAdd oropa ON orop.orderOptionSeq = oropa.orderOptionSeq 
+			LEFT JOIN TbOrderOptionPart oropp ON orop.orderOptionSeq = oropp.orderOptionSeq
+			LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+			LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+			
+			WHERE odr.originalSheetSeq = #{originalSheetSeq}
+			
+			GROUP BY odr.orderSeq
+			
+			ORDER BY odr.orderSeq DESC
+			  	</select>
+  	
+  	<select id="getOrderDetail" parameterType="int" resultType="orderDetailDto">
+  		SELECT * FROM TbOrderDetail WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getInqueryOrder" parameterType="java.util.Map" resultType="inqueryOrderDto">
+  		SELECT * FROM ViewInqueryOrder WHERE storeProductName LIKE CONCAT('%',#{productCode},'%') AND branchName = #{branchName}
+  		ORDER BY orderSeq DESC, orderK, storeProductName, orderMainColor, orderSize LIMIT 100
+  	</select>
+  	
+  	<select id="getInqueryOrderByCustomer" parameterType="inqueryOrderDto" resultType="inqueryOrderDto">
+  		SELECT * FROM ViewInqueryOrder WHERE customerSeq = #{customerSeq} AND branchSeq = #{branchSeq}
+  		ORDER BY orderSeq DESC, orderK, storeProductName, orderMainColor, orderSize LIMIT 100
+  	</select>
+  	
+  	<select id="getOrderGoldWeight" parameterType="int" resultType="Double">
+  		SELECT ROUND((orderWeight*TbK.kRate),2)goldWeight FROM TbOrder
+		LEFT JOIN TbOrderWeight ON TbOrder.orderSeq = TbOrderWeight.orderSeq
+		LEFT JOIN TbOrderDetail ON TbOrder.orderSeq = TbOrderDetail.orderSeq
+		LEFT JOIN TbK ON TbOrderDetail.kSeq = TbK.kSeq
+		WHERE TbOrder.orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getOrderK" parameterType="int" resultType="String">
+  		SELECT orderK FROM TbOrderDetail WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getOrderWeight" parameterType="int" resultType="Double">
+  		SELECT orderWeight FROM TbOrderWeight WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getOrderSalePrice" parameterType="int" resultType="int">
+  		SELECT orderSalePrice FROM TbOrderPrice WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+  	<select id="getOrderSaleWeight" parameterType="int" resultType="Double">
+  		SELECT orderSaleWeight FROM TbOrderWeight WHERE orderSeq = #{orderSeq}
+  	</select>
+  	
+	<insert id="insertOrder" parameterType="orderDto">
+		INSERT INTO TbOrder(originalSheetSeq, customerSeq, storeProductSeq, orderMemberSeq)
+		VALUES(#{originalSheetSeq}, #{customerSeq}, #{storeProductSeq}, #{orderMemberSeq})
+	<selectKey keyProperty="orderSeq" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+	</insert>
+	
+	<insert id="insertOrderDetail" parameterType="orderDetailDto">
+		INSERT INTO TbOrderDetail(orderSeq, kSeq, plateSeq, orderK, orderMainColor, orderSubColor, orderSize, orderEtc, orderHurry, orderHalf)
+		VALUES(#{orderSeq}, #{kSeq}, #{plateSeq}, #{orderK}, #{orderMainColor}, #{orderSubColor}, #{orderSize}, #{orderEtc}, #{orderHurry}, #{orderHalf})
+	</insert>
+	
+	<insert id="insertOrderPrice" parameterType="int">
+		INSERT INTO TbOrderPrice (orderSeq)
+		VALUES(#{orderSeq})
+	</insert>
+
+	<insert id="insertOrderWeight" parameterType="int">
+		INSERT INTO TbOrderWeight (orderSeq)
+		VALUES(#{orderSeq})
+	</insert>
+	
+	<update id="updateOrderCzWeight" parameterType="int">
+		UPDATE TbOrderWeight SET orderWeightCz =
+			(SELECT 
+				IFNULL(SUM(czAveWeight),0.0)
+			FROM TbOrderOptionCz
+			NATURAL JOIN TbCz
+			NATURAL JOIN TbCzSize
+			WHERE orderOptionSeq =
+				(SELECT orderOptionSeq FROM TbOrderOption WHERE orderSeq = #{orderSeq}))
+		WHERE TbOrderWeight.orderSeq = #{orderSeq}
+	</update>	
+	
+	<update id="updateOrder" parameterType="orderDto">
+		UPDATE TbOrder SET 
+			customerSeq = #{customerSeq},
+			orderMemberSeq = #{orderMemberSeq},
+			storeProductSeq = #{storeProductSeq}
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="updateOrderDetail" parameterType="orderDetailDto">
+		UPDATE TbOrderDetail SET
+			kSeq = #{kSeq},
+			orderHurry = #{orderHurry},
+			orderHalf = #{orderHalf},
+			orderK = #{orderK},
+			orderMainColor = #{orderMainColor},
+			orderSubColor = #{orderSubColor},
+			orderSize = #{orderSize},
+			orderEtc = #{orderEtc},
+			plateSeq = #{plateSeq}
+		WHERE orderSeq = #{orderSeq}
+			
+	</update>
+	
+	<update id="registerOrder" parameterType="int">
+		UPDATE TbOrderDetail AS A INNER JOIN TbOrder AS B
+		ON A.orderSeq = B.orderSeq
+		SET A.orderState = 2
+		WHERE B.originalSheetSeq = #{originalSheetSeq}
+	</update>
+	
+	<update id="updateOrderState5" parameterType="int">
+		UPDATE TbOrderDetail SET
+			orderState = 5
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="updateOrderState6" parameterType="int">
+		UPDATE TbOrderDetail SET
+			orderState = 6
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="updateReleaseSheetSeqInOrder" parameterType="java.util.Map">
+		UPDATE TbOrder
+		SET releaseSheetSeq = #{releaseSheetSeq}
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="updateOrderSaleWeight" parameterType="orderWeightDto">
+		UPDATE TbOrderWeight
+		SET orderSaleWeight = #{orderSaleWeight}
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="updateOrderSalePrice" parameterType="orderPriceDto">
+		UPDATE TbOrderPrice
+		SET orderSalePrice = #{orderSalePrice}
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="updateOrderState" parameterType="orderDetailDto">
+		UPDATE TbOrderDetail
+		SET orderState = #{orderState}
+		WHERE orderSeq = #{orderSeq}
+	</update>
+	
+	<update id="updateOrderReleasePrice" parameterType="orderPriceDto">
+		UPDATE TbOrderPrice
+		SET orderReleasePrice = #{orderReleasePrice}
+		WHERE TbOrderPrice.orderSeq = #{orderSeq}
+	</update>
+	
+	<delete id="deleteOrderWeight" parameterType="int">
+		DELETE FROM TbOrderWeight WHERE orderSeq = #{orderSeq}
+	</delete>
+	
+	<delete id="deleteOrderPrice" parameterType="int">
+		DELETE FROM TbOrderPrice WHERE orderSeq = #{orderSeq}
+	</delete>
+	
+	<delete id="deleteOrderDetail" parameterType="int">
+		DELETE FROM TbOrderDetail WHERE orderSeq = #{orderSeq}
+	</delete>
+	
+	<delete id="deleteOrder" parameterType="int">
+		DELETE FROM TbOrder WHERE orderSeq = #{orderSeq}
+	</delete>
+  
+  </mapper>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="factory.product">
+  	<resultMap type="productDto" id="productResult">
+  		<result property="productSeq" column="productSeq"/>
+  		<result property="categorySeq" column="categorySeq"/>
+  		<result property="typeSeq" column="typeSeq"/>
+  		<result property="productCode" column="productCode"/>
+  		<result property="productName" column="productName"/>
+  		<result property="productAveWeight" column="productAveWeight"/>
+  		<result property="productImage" column="productImage"/>
+  		<result property="productInUse" column="productInUse"/>
+  	</resultMap>
+  
+  	<resultMap type="categoryDto" id="categoryResult">
+  		<result property="categorySeq" column="categorySeq"/>
+  		<result property="category" column="category"/>
+  		<result property="categoryType" column="categoryType"/>
+  	</resultMap>
+  	
+  	<resultMap type="typeMainDto" id="typeMainResult">
+  		<result property="typeMainSeq" column="typeMainSeq"/>
+  		<result property="typeMain" column="typeMain"/>
+  	</resultMap>
+  	
+  	<resultMap type="typeDto" id="typeResult">
+  		<result property="typeSeq" column="typeSeq"/>
+  		<result property="typeSub" column="typeSub"/>
+  		<result property="typeMain" column="typeMain"/>
+  		<result property="type" column="type"/>
+  		<result property="typeMainSeq" column="typeMainSeq"/>
+  	</resultMap>
+  	
+  	<resultMap type="productCzSizeDto" id="productCzSizeResult">
+  		<result property="czSizeSeq" column="czSizeSeq"/>
+  		<result property="productSeq" column="productSeq"/>
+  		<result property="czQty" column="czQty"/>
+  		<result property="productCzSizeSeq" column="productCzSizeSeq"/>
+  		<result property="czSize" column="czSize"/>
+  	</resultMap>
+  	
+  	<resultMap type="productStoneSizeDto" id="productStoneSizeResult">
+  		<result property="stoneSizeSeq" column="stoneSizeSeq"/>
+  		<result property="productSeq" column="productSeq"/>
+  		<result property="stoneQty" column="stoneQty"/>
+  		<result property="productStoneSizeSeq" column="productStoneSizeSeq"/>
+  		<result property="stoneSize" column="stoneSize"/>
+  	</resultMap>
+  	
+  	<resultMap type="productPartAttributeDto" id="productPartAttributeResult">
+  		<result property="productSeq" column="productSeq"/>
+  		<result property="productPartAttributeSeq" column="productPartAttributeSeq"/>
+  		<result property="partAttributeSeq" column="partAttributeSeq"/>
+  		<result property="partAttribute" column="partAttribute"/>
+  	</resultMap>
+ 
+ 	<select id="getCategoryList" resultType="categoryDto">
+ 		SELECT * FROM TbCategory;
+ 	</select>
+ 	
+ 	<select id="getTypeList" resultType="typeDto">
+ 		SELECT * FROM TbType;
+ 	</select>
+ 	
+ 	<select id="checkOverLapProductName" parameterType="productDto" resultType="int">
+ 		SELECT COUNT(*) FROM 
+ 			(SELECT * FROM TbProduct WHERE
+ 				categorySeq=#{categorySeq} AND productCode=#{productCode} AND typeSeq=#{typeSeq}) DATA
+ 	</select>
+ 	
+ 	<select id="getCategory" parameterType="int" resultType="string">
+ 		SELECT category FROM TbCategory WHERE categorySeq=#{categorySeq}
+ 	</select>
+ 	
+ 	<select id="getType" parameterType="int" resultType="string">
+ 		SELECT type FROM TbType WHERE typeSeq=#{typeSeq}
+ 	</select>
+ 	
+ 	<select id="getTypeMainList" resultType="typeMainDto">
+ 		SELECT * FROM TbTypeMain
+ 	</select>
+ 	
+ 	<select id="getProductList" parameterType="java.util.Map" resultType="productDto">
+ 		SELECT Rt.* FROM (
+			SELECT @RNUM := @RNUM +1 AS ROWNUM, t. * 
+			FROM (
+					SELECT * FROM TbProduct WHERE productInUse = 'T' ORDER BY productName DESC 
+				)t,
+				 (
+					SELECT @RNUM :=0
+				)R
+			)Rt
+		WHERE Rt.ROWNUM BETWEEN #{startNum} AND #{endNum} 
+ 	</select>
+ 	
+ 	<select id="searchProductBoard" parameterType="searchProductDto" resultType="productDto">
+ 		SELECT Rt.* FROM (
+			SELECT @RNUM := @RNUM +1 AS ROWNUM, t. * 
+			FROM (
+					SELECT * FROM TbProduct WHERE productInUse = 'T' AND categorySeq LIKE CONCAT('%',IF(#{categorySeq}=0,'',#{categorySeq}),'%')  AND productCode LIKE CONCAT('%',#{productCode},'%') ORDER BY productName 
+				)t,
+				 (
+					SELECT @RNUM :=0
+				)R
+			)Rt
+		WHERE Rt.ROWNUM BETWEEN #{startNum} AND #{endNum} 
+ 	</select>
+ 	
+ 	<select id="getProduct" parameterType="int" resultType="productDto">
+ 		SELECT * FROM TbProduct WHERE productSeq=#{productSeq}
+ 	</select>
+ 	
+ 	<select id="getProductCzSizeList" parameterType="int" resultType="productCzSizeDto">
+ 		SELECT * FROM TbProductCzSize WHERE productSeq=#{productSeq} ORDER BY productCzSizeSeq
+ 	</select>
+ 	
+ 	<select id="getProductStoneSizeList" parameterType="int" resultType="productStoneSizeDto">
+ 		SELECT * FROM TbProductStoneSize WHERE productSeq=#{productSeq} ORDER BY productStoneSizeSeq
+ 	</select>
+ 	
+ 	<select id="getProductPartAttributeList" parameterType="int" resultType="productPartAttributeDto">
+ 		SELECT * FROM TbProductPartAttribute WHERE productSeq=#{productSeq} ORDER BY productPartAttributeSeq
+ 	</select>
+ 	
+ 	<select id="getCategorySeq" parameterType="String" resultType="int">
+ 		SELECT categorySeq FROM TbCategory WHERE category=#{category}
+ 	</select>
+ 	
+ 	<select id="getFactoryCategoryList" resultType="categoryDto">
+ 		SELECT * FROM TbCategory WHERE categoryType = 'T'
+ 	</select>
+ 	
+ 	<select id="getTotalRow" parameterType="searchProductDto" resultType="int">
+ 		SELECT COUNT(*) FROM TbProduct WHERE productInUse = 'T' AND categorySeq LIKE CONCAT('%',IF(#{categorySeq}=0,'',#{categorySeq}),'%')  AND productCode LIKE CONCAT('%',#{productCode},'%')
+ 	</select>
+ 	
+ 	<select id="getProductSeq" parameterType="productDto" resultType="int">
+ 		SELECT IF(COUNT(*)=0,0,productSeq) FROM TbProduct WHERE categorySeq=#{categorySeq} AND typeSeq=#{typeSeq} AND productCode=#{productCode}
+ 	</select>
+ 	
+ 	<select id="getPtoductSeqInUse" parameterType="productDto" resultType="int">
+ 		SELECT IF(COUNT(*)=0,0,productSeq) FROM TbProduct WHERE categorySeq=#{categorySeq} AND typeSeq=#{typeSeq} AND productCode=#{productCode} AND productInUse = 'T'
+ 	</select>
+ 	
+ 	<select id="getTypeMainSeq" parameterType="int" resultType="int">
+ 		SELECT typeMainSeq FROM TbType WHERE typeSeq=#{typeSeq}
+ 	</select>
+ 	
+ 	<select id="getTypeSeq" parameterType="int" resultType="int">
+ 		SELECT typeSeq FROM TbStoreProduct WHERE storeProductSeq = #{storeProductSeq}
+ 	</select>
+ 	
+ 	<select id="getSupplierCategoryList" resultType="categoryDto">
+ 		SELECT * FROM TbCategory WHERE categoryType = 'F' 
+ 	</select>
+ 	
+ 	<select id="getCategoryListTypeT" resultType="categoryDto">
+ 		SELECT * FROM TbCategory WHERE categoryType = 'T'
+ 	</select>
+ 	
+ 	<insert id="productInsert" parameterType="productDTO" keyColumn="productSeq">
+ 		INSERT INTO TbProduct (categorySeq, productCode, typeSeq, productAveWeight, productImage, productName) 
+		VALUES(#{categorySeq},#{productCode},#{typeSeq},#{productAveWeight},#{productImage},#{productName})
+		<selectKey keyProperty="productSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+ 	</insert>
+ 	
+ 	<insert id="insertProductCzSize" parameterType="productCzSizeDto">
+ 		INSERT INTO TbProductCzSize (czSizeSeq, productSeq, czQty, czSize)
+ 		SELECT #{czSizeSeq},#{productSeq},#{czQty},czSize FROM TbCzSize WHERE TbCzSize.czSizeSeq=#{czSizeSeq}
+ 	</insert>
+ 
+ 	<insert id="insertProductStoneSize" parameterType="productStoneSizeDto">
+ 		INSERT INTO TbProductStoneSize (stoneSizeSeq, productSeq,stoneQty,stoneSize)
+ 		SELECT #{stoneSizeSeq},#{productSeq},#{stoneQty},stoneSize FROM TbStoneSize WHERE TbStoneSize.stoneSizeSeq=#{stoneSizeSeq}
+ 	</insert>
+ 	
+ 	<insert id="insertProductPartAttribute" parameterType="partAttributeDto">
+ 		INSERT INTO TbProductPartAttribute (partAttributeSeq, productSeq,partAttribute)
+ 		SELECT #{partAttributeSeq},#{productSeq},partAttribute FROM TbPartAttribute WHERE TbPartAttribute.partAttributeSeq=#{partAttributeSeq}
+ 	</insert>
+ 	
+ 	<update id="notInUseProduct" parameterType="int">
+ 		UPDATE TbProduct SET productInUse='F' WHERE productSeq=#{productSeq}
+ 	</update>
+ 	
+ 	<update id="updateProduct" parameterType="productDto" >
+ 		UPDATE TbProduct SET 
+ 			productAveWeight=#{productAveWeight}
+ 		WHERE productSeq=#{productSeq}		
+ 	</update>
+ 	
+ 	<update id="updateProductDetail" parameterType="productDto" >
+ 		UPDATE TbProduct SET 
+ 			productAveWeight=#{productAveWeight},
+ 			productImage=#{productImage}
+ 		WHERE productSeq=#{productSeq}		
+ 	</update>
+ 	
+ 	<delete id="deleteProductCzSize"  parameterType="int">
+ 		DELETE FROM TbProductCzSize WHERE productSeq=#{productSeq}
+ 	</delete>
+ 	
+ 	<delete id="deleteProductStoneSize"  parameterType="int">
+ 		DELETE FROM TbProductStoneSize WHERE productSeq=#{productSeq}
+ 	</delete>
+ 	
+ 	<delete id="deleteProductPartAttribute"  parameterType="int">
+ 		DELETE FROM TbProductPartAttribute WHERE productSeq=#{productSeq}
+ 	</delete>
+  </mapper>

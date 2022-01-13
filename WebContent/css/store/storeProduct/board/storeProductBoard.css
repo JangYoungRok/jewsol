@@ -1,0 +1,96 @@
+@CHARSET "UTF-8";
+
+#function{
+	margin : 0 auto;
+	margin-top : 10px;
+	width : 750px;
+	height: 40px;
+}
+
+#function p{
+	padding-top:8px;
+	float : left;
+	width : 445px;
+	height: 30px;
+	border: 1px solid black;
+	text-align : left;
+	
+}
+#function p input{
+	width : 120px;
+}
+
+#function p input:last-child{
+	width : 100px;
+}
+
+#function p select{
+	margin-left : 10px;
+	width : 80px;
+}
+
+#function p:last-child{
+	
+	width : 300px;
+	border-left : 0px;
+	text-align : center;
+}
+
+#productBoard{
+	margin : 0 auto;
+	margin-top : 10px;
+	width : 595px;
+	height: 400px;
+	border: 1px solid black;
+}
+
+#productBoard p{
+	height : 99px;
+	border-bottom : 1px solid black;
+}
+
+#productBoard p.hover{
+	background-color: lightgray;
+	cursor: pointer;
+}
+#productBoard p:last-child{
+	border-bottom : 0px;
+}
+
+#productBoard p span{
+	float : left;
+	display : block;
+	width : 147px;
+	height: 98px;
+	font-size: 11px;
+	text-align :center;
+}
+
+#productBoard p span.hover{
+	cursor: point;
+	background-color: lightgray;
+}
+
+
+#productBoard img{
+	width : 106px;
+	height: 85px;
+}
+
+#pnb{
+	margin : 0 auto;
+	margin-top : 5px;
+	padding-top: 7px;
+	width : 750px;
+	height: 23px;
+	text-align : center;
+	font-size: 17px;
+	
+}
+
+#pnb span.selectedPage{
+	color:gray;
+	cursor:pointer;	
+}
+
+

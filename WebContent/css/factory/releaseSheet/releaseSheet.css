@@ -1,0 +1,177 @@
+@CHARSET "UTF-8";
+img{
+	width : 75px;
+	height : 60px;
+	margin-top : 2px;	
+}
+
+#releaseSheetListPanel{
+	float : left;
+	font-size: 14px;
+	vertical-align : top;
+	width : 200px;
+	height : 500px;
+	overflow: auto;
+	border-right : 1px solid black;
+}
+
+#releaseSheetListPanel #releaseSheetList{
+	border-collapse : collapse;
+	text-align : center;
+}
+
+#releaseSheetListPanel #releaseSheetList th{
+	vertical-align : middle;
+	background-color : lightgray;
+	border-right : 1px solid black;
+	
+}
+
+#releaseSheetListPanel #releaseSheetList th:last-child{
+	border-right : 0px;
+}
+
+#releaseSheetListPanel #releaseSheetList td{
+	vertial-align : middle;
+	border-right : 1px solid black;
+}
+
+#releaseSheetListPanel #releaseSheetList td:last-child{
+	border-right : 0px;
+}
+
+#releaseSheetListPanel #releaseSheetList tr:last-child{
+	border-bottom : 1px solid black;
+}
+
+#releaseSheetListPanel #releaseSheetList div{
+	font-size : 13px;
+	line-height : 25px;
+}
+
+#releaseSheetListPanel #releaseSheetList .branchName{
+	width : 45px;
+	height : 25px;
+}
+
+#releaseSheetListPanel #releaseSheetList .releaseSheetNumber{
+	width : 45px;
+	height : 25px;
+}
+
+#releaseSheetListPanel #releaseSheetList .releaseQty{
+	width : 40px;
+	height : 25px;
+}
+
+#releaseSheetListPanel #releaseSheetList .releaseTime{
+	font-size : 11px;
+	width : 67px;
+	height : 25px;
+}
+
+#column{
+	height : 500px;
+	margin-left : 200px;
+	vertical-align : top;
+	font-size :14px;
+}
+
+#column #triggerPanel{
+	padding-top: 13px;
+	height : 45px;
+	overflow : hidden;
+	border-bottom : 1px solid black;
+}
+
+#column #triggerPanel #branchList{
+	margin-left : 10px;
+	margin-right : 10px;
+	width : 60px;
+	
+}
+
+#column #triggerPanel #releaseSheetDate{
+	width : 70px;
+	margin-right : 10px;
+	text-align : center;
+}
+
+#column #triggerPanel #releaseSheetNumber{
+	width : 30px;
+	margin-right : 10px;
+	text-align : center;
+	
+}
+
+#column #triggerPanel input[type=button]{
+	width : 100px;
+	margin-right : 10px;
+}
+
+
+
+#column #orderListPanel{
+	height : 440px;
+	overflow : auto;
+}
+
+#column #orderListPanel #orderList{
+	border-collapse : collapse;
+}
+
+#column #orderListPanel #orderList .checked{
+	background-color : lightgray;
+}
+
+#column #orderListPanel #orderList td{
+	vertical-align : middle;
+	border-right : 1px solid black;
+	border-bottom : 1px solid black;
+}
+
+#column #orderListPanel #orderList div{
+	height : 65px;
+	line-height : 65px;
+	font-size : 10px;
+	overflow : hidden;
+	text-align : center;
+}
+
+#column #orderListPanel #orderList .orderK{
+	width : 25px;
+}
+
+#column #orderListPanel #orderList .orderDate{
+	width : 60px;
+}
+
+#column #orderListPanel #orderList .storeProductImage{
+	width : 80px;
+}
+
+#column #orderListPanel #orderList .customerName{
+	width : 70px;
+}
+
+#column #orderListPanel #orderList .storeProductName{
+	width : 60px;
+}
+
+#column #orderListPanel #orderList .orderSize{
+	width : 30px;
+}
+#column #orderListPanel #orderList .orderColor{
+	width : 65px;
+}
+
+#column #orderListPanel #orderList .orderEtc{
+	width : 150px;
+}
+
+#column #orderListPanel #orderList .orderWeight{
+	width : 30px;
+}
+
+
+

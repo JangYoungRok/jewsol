@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.saleSheet">
+	<select id="getSaleSheetList" parameterType="int" resultType="saleSheetDto">
+		SELECT * FROM TbSaleSheet WHERE customerSeq = #{customerSeq}
+		ORDER BY saleSheetSeq DESC LIMIT 130
+	</select>
+	
+	<select id="getSaleSheet" parameterType="int" resultType="saleSheetDto">
+		SELECT * FROM TbSaleSheet WHERE saleSheetSeq = #{saleSheetSeq}
+	</select>
+	
+	<select id="getSaleSheetListByMonth" parameterType="java.util.Map" resultType="saleSheetDto">
+		SELECT * FROM TbSaleSheet ss
+		LEFT JOIN TbCustomer cs ON ss.customerSeq = cs.customerSeq
+		WHERE YEAR(ss.saleSheetDate) = #{thisYear}
+		AND MONTH(ss.saleSheetDate) = #{thisMonth}
+		AND cs.branchSeq = #{branchSeq}
+	</select>
+	
+	<select id="getOrderListForSaleSheet" parameterType="int" resultType="orderForSaleSheetDto">
+		<!-- SELECT * FROM ViewOrderForSaleSheet WHERE saleSheetSeq = #{saleSheetSeq}
+		ORDER BY orderK, storeProductName -->
+		SELECT 
+		
+			odr.orderSeq, 
+			odr.customerSeq,
+			dataOdr.saleSheetSeq,
+			odrd.orderK,
+			sp.storeProductName,
+			ifnull(sum(odroc.orderOptionCzQty),0) totalCzQty,
+			odro.orderOptionName,
+			odrd.orderEtc,
+			odrp.orderSalePrice,
+			odrw.orderSaleWeight
+		
+		FROM
+		(
+		SELECT sale.orderSeq, sale.saleSheetSeq
+		 
+		FROM TbSale sale
+		WHERE sale.saleSheetSeq =  #{saleSheetSeq}
+		) dataOdr JOIN TbOrder odr on dataOdr.orderSeq = odr.orderSeq
+		
+		
+		      LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+				LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+				LEFT JOIN TbOrderPrice odrp ON odr.orderSeq = odrp.orderSeq
+				LEFT JOIN TbOrderWeight odrw ON odr.orderSeq = odrw.orderSeq
+				LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+				LEFT JOIN TbOrderOptionCz odroc ON odro.orderOptionSeq = odroc.orderOptionSeq
+				LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+		 GROUP BY odr.orderSeq	
+		  ORDER BY odrd.orderK, sp.storeProductName
+	</select>
+	
+	<select id="getLastSaleSheetNumber" parameterType="String" resultType="String">
+		SELECT saleSheetNumber FROM TbSaleSheet WHERE saleSheetDate = #{saleDate} Order BY saleSheetNumber DESC LIMIT 1
+	</select>
+	
+	<select id="getOrderSeqList" parameterType="int" resultType="int"> 
+		SELECT orderSeq FROM TbSale WHERE saleSheetSeq = #{saleSheetSeq}
+	</select>
+	
+	<select id="getLastSaleSheet" parameterType="int" resultType="saleSheetDto">
+		SELECT * FROM TbSaleSheet WHERE customerSeq = #{customerSeq} ORDER BY logtime DESC LIMIT 1
+		
+	</select>
+	
+	<insert id="insertSaleSheet" parameterType="saleSheetDto">
+		INSERT INTO TbSaleSheet 
+			(customerSeq, 
+			goldPriceSeq, 
+			saleTypeSeq, 
+			saleSheetDate, 
+			saleSheetNumber, 
+			total14Weight,
+			total18Weight,
+			total10Weight,
+			totalGoldWeight,
+			totalSalePrice,
+			saleCash,
+			saleGold)
+			VALUES(
+			#{customerSeq},
+			#{goldPriceSeq},
+			#{saleTypeSeq},
+			#{saleSheetDate},
+			#{saleSheetNumber},
+			#{total14Weight},
+			#{total18Weight},
+			#{total10Weight},
+			#{totalGoldWeight},
+			#{totalSalePrice},
+			#{saleCash},
+			#{saleGold}
+			)
+		<selectKey keyProperty="saleSheetSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateLastBalance" parameterType="saleSheetDto">
+		UPDATE TbSaleSheet 
+		SET lastBalanceGold = #{lastBalanceGold},
+		lastBalanceCash = #{lastBalanceCash}
+		WHERE saleSheetSeq = #{saleSheetSeq}
+	</update>
+	
+	<update id="updateBalance" parameterType="saleSheetDto">
+		UPDATE TbSaleSheet
+		SET balanceGold = #{balanceGold},
+		balanceCash = #{balanceCash},
+		lastBalanceGold = #{lastBalanceGold},
+		lastBalanceCash = #{lastBalanceCash}
+		WHERE saleSheetSeq = #{saleSheetSeq}
+	</update>
+  </mapper>

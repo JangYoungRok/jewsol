@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="factory.releaseSheet">
+	<select id="getReleaseSheetList" parameterType="String" resultType="releaseSheetDto">
+		SELECT *,
+			TbBranch.branchName,
+			DATE_FORMAT(logtime, '%H : %i')releaseTime
+		FROM TbReleaseSheet
+		NATURAL JOIN TbBranch
+		WHERE releaseSheetDate = #{releaseSheetDate}
+		ORDER BY branchSeq, releaseSheetNumber
+	</select>
+	<select id="getOrderListForReleaseSheetList" parameterType="viewOrderForReleaseSheetDto" resultType="viewOrderForReleaseSheetDto">
+		SELECT * FROM ViewOrderForReleaseSheet
+		 WHERE orderState = #{orderState} AND branchName = #{branchName} ORDER BY orderK, storeProductName, orderMainColor, orderSize
+	</select>
+	
+	<select id="getReleaseSheetNumber" parameterType="releaseSheetDto" resultType="int">
+		SELECT IFNULL(MAX(releaseSheetNumber),0) FROM TbReleaseSheet WHERE branchSeq = #{branchSeq} AND releaseSheetDate = #{releaseSheetDate}
+	</select>
+	
+	<select id="getReleaseSheetType" parameterType="int" resultType="String">
+		SELECT releaseSheetType FROM TbReleaseSheet WHERE releaseSheetSeq = #{releaseSheetSeq}
+	</select>
+	
+	<select id="getReleaseSheet" parameterType="int" resultType="releaseSheetDto">
+		SELECT *,
+			TbBranch.branchName,
+			DATE_FORMAT(logtime, '%H : %i')releaseTime
+		FROM TbReleaseSheet
+		NATURAL JOIN TbBranch WHERE releaseSheetSeq = #{releaseSheetSeq}
+	</select>
+	
+	<select id="getOrderListForPrintReleaseSheetList" parameterType="int" resultType="viewOrderForReleaseSheetDto">
+		SELECT * FROM ViewOrderForReleaseSheet
+		WHERE releaseSheetSeq = #{releaseSheetSeq} ORDER BY orderK, storeProductName, orderMainColor, orderSize
+	</select>
+	
+	<select id="getUnStockedReleaseSheetList" parameterType="int" resultType="releaseSheetDto">
+		SELECT *
+		 FROM TbReleaseSheet WHERE branchSeq = #{branchSeq} AND stocked = 'F'
+		ORDER BY releaseSheetDate, releaseSheetNumber
+	</select>
+	
+	<select id="getOrderListByReleaseSheetSeq" parameterType="int" resultType="viewOrderForReleaseSheetDto">
+		SELECT * FROM ViewOrderForReleaseSheet WHERE releaseSheetSeq = #{releaseSheetSeq}
+		ORDER BY orderK, orderNumber
+	</select>
+	
+	
+	<insert id="insertReleaseSheet" parameterType="releaseSheetDto">
+		INSERT INTO TbReleaseSheet(branchSeq, releaseSheetNumber, releaseSheetDate, releaseSheetType, totalQty, totalLabor, totalGoldWeight, total14KWeight, total18KWeight, total10KWeight)
+		VALUES(#{branchSeq}, #{releaseSheetNumber}, #{releaseSheetDate}, #{releaseSheetType}, #{totalQty}, #{totalLabor}, #{totalGoldWeight}, #{total14KWeight}, #{total18KWeight}, #{total10KWeight})
+		<selectKey keyProperty="releaseSheetSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey> 
+	</insert>
+	
+	<update id="updateReleaseSheet" parameterType="releaseSheetDto">
+		UPDATE TbReleaseSheet SET
+		totalLabor = #{totalLabor},
+		totalGoldWeight = #{totalGoldWeight}
+		WHERE
+		releaseSheetSeq = #{releaseSheetSeq}
+	</update>
+  </mapper>

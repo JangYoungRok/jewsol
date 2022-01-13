@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="factory.releaseSheet">
+	<select id="getReleaseSheetList" parameterType="String" resultType="releaseSheetDto">
+		SELECT *,
+			TbBranch.branchName,
+			DATE_FORMAT(logtime, '%H : %i')releaseTime
+		FROM TbReleaseSheet
+		NATURAL JOIN TbBranch
+		WHERE releaseSheetDate = #{releaseSheetDate}
+		ORDER BY branchSeq, releaseSheetNumber
+	</select>
+	<select id="getOrderListForReleaseSheetList" parameterType="viewOrderForReleaseSheetDto" resultType="viewOrderForReleaseSheetDto">
+		<!-- SELECT * FROM ViewOrderForReleaseSheet
+		 WHERE orderState = #{orderState} AND branchName = #{branchName} ORDER BY orderK, storeProductName, orderMainColor, orderSize -->
+		 
+		SELECT
+			odr.orderSeq,
+			rs.releaseSheetSeq,
+			br.branchName,
+			odrd.orderState,
+			oris.originalSheetDate,date_format(oris.originalSheetDate,_utf8'%c - %e') orderDate,
+			odr.orderNumber,
+			odrd.orderK,
+			sp.storeProductName,
+			sp.storeProductImage,
+			TRIM(CONCAT(IFNULL(cs.customerSection,''),' ',IFNULL(cs.customerArea,''),' ',cs.customerName)) customerName,
+			odrd.orderSize,
+			odrd.orderMainColor,
+			odrd.orderSubColor,
+			odro.orderOptionName,
+			odrd.orderEtc,
+			odrd.orderHurry,
+			odrw.orderWeight,
+			odro.orderOptionLabor
+		FROM
+			(
+				SELECT 
+				
+				coverOdrd.orderSeq
+				
+				FROM TbOrderDetail coverOdrd
+				
+				WHERE coverOdrd.orderState = #{orderState}
+			) dataOdr JOIN TbOrder odr ON dataOdr.orderSeq = odr.orderSeq
+		LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+		LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+		LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+		LEFT JOIN TbBranch br ON cs.branchSeq = br.branchSeq
+		LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+		LEFT JOIN TbOriginalSheet oris ON odr.originalSheetSeq = oris.originalSheetSeq
+		LEFT JOIN TbReleaseSheet rs ON odr.releaseSheetSeq = rs.releaseSheetSeq
+		LEFT JOIN TbOrderWeight odrw ON odr.orderSeq = odrw.orderSeq
+		
+		WHERE br.branchName = #{branchName}
+		
+		ORDER BY odrd.orderK, sp.storeProductName, odrd.orderMainColor, odrd.orderSize
+					 
+	</select>
+	
+	<select id="getReleaseSheetNumber" parameterType="releaseSheetDto" resultType="int">
+		SELECT IFNULL(MAX(releaseSheetNumber),0) FROM TbReleaseSheet WHERE branchSeq = #{branchSeq} AND releaseSheetDate = #{releaseSheetDate}
+	</select>
+	
+	<select id="getReleaseSheetType" parameterType="int" resultType="String">
+		SELECT releaseSheetType FROM TbReleaseSheet WHERE releaseSheetSeq = #{releaseSheetSeq}
+	</select>
+	
+	<select id="getReleaseSheet" parameterType="int" resultType="releaseSheetDto">
+		SELECT *,
+			TbBranch.branchName,
+			DATE_FORMAT(logtime, '%H : %i')releaseTime
+		FROM TbReleaseSheet
+		NATURAL JOIN TbBranch WHERE releaseSheetSeq = #{releaseSheetSeq}
+	</select>
+	
+	<select id="getOrderListForPrintReleaseSheetList" parameterType="int" resultType="viewOrderForReleaseSheetDto">
+		<!-- SELECT * FROM ViewOrderForReleaseSheet
+		WHERE releaseSheetSeq = #{releaseSheetSeq} ORDER BY orderK, storeProductName, orderMainColor, orderSize -->
+		SELECT
+			odr.orderSeq,
+			rs.releaseSheetSeq,
+			br.branchName,
+			odrd.orderState,
+			oris.originalSheetDate,date_format(oris.originalSheetDate,_utf8'%c - %e') orderDate,
+			odr.orderNumber,
+			odrd.orderK,
+			sp.storeProductName,
+			sp.storeProductImage,
+			TRIM(CONCAT(IFNULL(cs.customerSection,''),' ',IFNULL(cs.customerArea,''),' ',cs.customerName)) customerName,
+			odrd.orderSize,
+			odrd.orderMainColor,
+			odrd.orderSubColor,
+			odro.orderOptionName,
+			odrd.orderEtc,
+			odrd.orderHurry,
+			odrw.orderWeight,
+			odro.orderOptionLabor
+		FROM
+			(
+				SELECT 
+				
+				coverOdr.orderSeq
+				
+				FROM TbOrder coverOdr
+				
+				WHERE coverOdr.releaseSheetSeq = #{releaseSheetSeq}
+			) dataOdr JOIN TbOrder odr ON dataOdr.orderSeq = odr.orderSeq
+			
+		LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+		LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+		LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+		LEFT JOIN TbBranch br ON cs.branchSeq = br.branchSeq
+		LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+		LEFT JOIN TbOriginalSheet oris ON odr.originalSheetSeq = oris.originalSheetSeq
+		LEFT JOIN TbReleaseSheet rs ON odr.releaseSheetSeq = rs.releaseSheetSeq
+		LEFT JOIN TbOrderWeight odrw ON odr.orderSeq = odrw.orderSeq
+		
+		ORDER BY odrd.orderK, sp.storeProductName, odrd.orderMainColor, odrd.orderSize
+		
+	</select>
+	
+	<select id="getUnStockedReleaseSheetList" parameterType="int" resultType="releaseSheetDto">
+		SELECT *
+		 FROM TbReleaseSheet WHERE branchSeq = #{branchSeq} AND stocked = 'F'
+		ORDER BY releaseSheetDate, releaseSheetNumber
+	</select>
+	
+	<select id="getOrderListByReleaseSheetSeq" parameterType="int" resultType="viewOrderForReleaseSheetDto">
+		<!-- SELECT * FROM ViewOrderForReleaseSheet WHERE releaseSheetSeq = #{releaseSheetSeq}
+		ORDER BY orderK, orderNumber -->
+		SELECT
+			odr.orderSeq,
+			rs.releaseSheetSeq,
+			br.branchName,
+			odrd.orderState,
+			oris.originalSheetDate,date_format(oris.originalSheetDate,_utf8'%c - %e') orderDate,
+			odr.orderNumber,
+			odrd.orderK,
+			sp.storeProductName,
+			sp.storeProductImage,
+			TRIM(CONCAT(IFNULL(cs.customerSection,''),' ',IFNULL(cs.customerArea,''),' ',cs.customerName)) customerName,
+			odrd.orderSize,
+			odrd.orderMainColor,
+			odrd.orderSubColor,
+			odro.orderOptionName,
+			odrd.orderEtc,
+			odrd.orderHurry,
+			odrw.orderWeight,
+			odro.orderOptionLabor
+		FROM
+			(
+				SELECT 
+				
+				coverOdr.orderSeq
+				
+				FROM TbOrder coverOdr
+				
+				WHERE coverOdr.releaseSheetSeq = #{releaseSheetSeq}
+			) dataOdr JOIN TbOrder odr ON dataOdr.orderSeq = odr.orderSeq
+			
+		LEFT JOIN TbOrderDetail odrd ON odr.orderSeq = odrd.orderSeq
+		LEFT JOIN TbOrderOption odro ON odr.orderSeq = odro.orderSeq
+		LEFT JOIN TbCustomer cs ON odr.customerSeq = cs.customerSeq
+		LEFT JOIN TbBranch br ON cs.branchSeq = br.branchSeq
+		LEFT JOIN TbStoreProduct sp ON odr.storeProductSeq = sp.storeProductSeq
+		LEFT JOIN TbOriginalSheet oris ON odr.originalSheetSeq = oris.originalSheetSeq
+		LEFT JOIN TbReleaseSheet rs ON odr.releaseSheetSeq = rs.releaseSheetSeq
+		LEFT JOIN TbOrderWeight odrw ON odr.orderSeq = odrw.orderSeq
+		
+		ORDER BY odrd.orderK, odr.orderNumber
+	</select>
+	
+	
+	<insert id="insertReleaseSheet" parameterType="releaseSheetDto">
+		INSERT INTO TbReleaseSheet(branchSeq, releaseSheetNumber, releaseSheetDate, releaseSheetType, totalQty, totalLabor, totalGoldWeight, total14KWeight, total18KWeight, total10KWeight)
+		VALUES(#{branchSeq}, #{releaseSheetNumber}, #{releaseSheetDate}, #{releaseSheetType}, #{totalQty}, #{totalLabor}, #{totalGoldWeight}, #{total14KWeight}, #{total18KWeight}, #{total10KWeight})
+		<selectKey keyProperty="releaseSheetSeq" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey> 
+	</insert>
+	
+	<update id="updateReleaseSheet" parameterType="releaseSheetDto">
+		UPDATE TbReleaseSheet SET
+		totalLabor = #{totalLabor},
+		totalGoldWeight = #{totalGoldWeight}
+		WHERE
+		releaseSheetSeq = #{releaseSheetSeq}
+	</update>
+  </mapper>

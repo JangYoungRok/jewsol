@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="store.supplier">
+  	<resultMap type="supplierDto" id="supplierResult">
+  		<result property="supplierSeq" column="supplierSeq"/>
+  		<result property="branchSeq" column="branchSeq"/>
+  		<result property="supplierName" column="supplierName"/>
+  		<result property="supplierBalanceCash" column="supplierBalanceCash"/>
+  		<result property="supplierBalanceGold" column="supplierBalanceGold"/>
+  		<result property="supplierInUse" column="supplierInUse"/>
+  	</resultMap>
+  
+  	<select id="getSupplierList" resultType="supplierDto">
+  		SELECT * FROM TbSupplier WHERE supplierInUse = 'T' AND supplierSeq > 0
+  	</select>
+  	
+  	<select id="getSupplierName" resultType="String" parameterType="int">
+  		SELECT supplierName FROM TbSupplier WHERE supplierSeq=#{supplierSeq}
+  	</select>
+  </mapper>

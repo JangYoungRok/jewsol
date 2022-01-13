@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="core.login">
+  	<resultMap type="loginDto" id="loginResult">
+  		<result property="loginSeq" column="loginSeq"/>
+  		<result property="memberSeq" column="memberSeq"/>
+  		<result property="loginPw" column="loginPw"/>
+  		<result property="loginId" column="loginId"/>
+  		<result property="authority" column="authority"/>
+  	</resultMap>
+  	
+  	<resultMap type="loginInfoDto" id="loginInfoResult">
+  		<result property="branchName" column="branchName"/>
+  		<result property="branchType" column="branchType"/>
+  		<result property="authority" column="authority"/>
+  		<result property="memberName" column="memberName"/>
+  	</resultMap>
+  	
+  	<select id="getBranchSeq" parameterType="String" resultType="int">
+  		SELECT branchSeq FROM TbMember WHERE TbMember.memberSeq =
+  			(SELECT memberSeq FROM TbLogin WHERE loginId=#{loginId})
+  	</select>
+  
+  	
+  	<select id="checkLoginId" parameterType="String" resultType="int">
+  		SELECT count(*) FROM TbLogin WHERE loginId=#{loginId}
+  	</select>
+  	
+  	<select id="getLoginPw" parameterType="String" resultType="String">
+  		SELECT loginPw FROM TbLogin WHERE loginId=#{loginId}
+  	</select>
+  	
+  	<select id="getLoginInfo" parameterType="String" resultType="loginInfoDto">
+  		SELECT 
+			authority,
+			(SELECT memberName FROM TbMember WHERE memberSeq = TbLogin.memberSeq) AS memberName,
+			(SELECT branchName FROM TbBranch WHERE TbBranch.branchSeq = 
+				(SELECT branchSeq FROM TbMember WHERE memberSeq = TbLogin.memberSeq)) AS branchName,
+			(SELECT branchType FROM TbBranch WHERE TbBranch.branchSeq = 
+				(SELECT branchSeq FROM TbMember WHERE memberSeq = TbLogin.memberSeq)) AS branchType,
+			(SELECT branchSeq FROM TbMember WHERE memberSeq = TbLogin.memberSeq) AS branchSeq
+		 FROM TbLogin WHERE loginId=#{loginId}
+  	</select>
+  
+  	<select id="getMemberSeq" parameterType="String" resultType="int">
+  		SELECT memberSeq FROM TbLogin WHERE loginId = #{loginId}
+  	</select>
+ 
+  </mapper>
