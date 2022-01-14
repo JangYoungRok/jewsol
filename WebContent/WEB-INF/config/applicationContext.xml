@@ -11,10 +11,10 @@
 	
 	<!-- datasource & connection pool -->
 	<bean id="DS" class="org.apache.commons.dbcp.BasicDataSource"
-				  p:driverClassName="com.mysql.jdbc.Driver"
-				  p:url="jdbc:mysql://121.254.168.73/dbjewsol"
-				  p:username="jewsol"
-				  p:password="wkd0fhrdnqls1!1"
+				  p:driverClassName=""
+				  p:url=""
+				  p:username=""
+				  p:password=""
 				  p:validationQuery="SELECT 1"
 				  p:testWhileIdle="true"
 				  p:timeBetweenEvictionRunsMillis="7200000"
